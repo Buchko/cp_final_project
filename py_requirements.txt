@@ -1,0 +1,7 @@
+ipykernel
+beatifulsoup4
+requests
+function-pipes
+numpy
+networkx
+matplotlib
