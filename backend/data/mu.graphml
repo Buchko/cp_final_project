@@ -2,203 +2,380 @@
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <key id="d0" for="edge" attr.name="weight" attr.type="double" />
   <graph edgedefault="undirected">
-    <node id="Elder Dragon Galio Morgana (DE/RU)" />
-    <node id="Mordekaiser Morgana (DE/SI)" />
-    <node id="Elder Dragon Mordekaiser Viego (RU/SI)" />
     <node id="Annie Jhin (NX/RU)" />
     <node id="Gwen Zed (IO/SI)" />
-    <node id="Teemo Yuumi (BC/PZ)" />
-    <node id="Elder Dragon Volibear (FR/RU)" />
-    <node id="Elder Dragon Norra (BC/RU)" />
+    <node id="Elder Dragon Mordekaiser Viego (RU/SI)" />
     <node id="Pyke Rek'Sai (BW/SH)" />
-    <node id="Lissandra Volibear (FR/SI)" />
-    <node id="Elder Dragon Shyvana (DE/RU)" />
-    <node id="Karma Sett (IO/PZ)" />
-    <node id="Karma Sett (FR/IO)" />
+    <node id="Elder Dragon Galio Morgana (DE/RU)" />
     <node id="Caitlyn Teemo (FR/PZ)" />
+    <node id="Elder Dragon Volibear (FR/RU)" />
     <node id="Ashe LeBlanc (FR/NX)" />
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Teemo Yuumi (BC/PZ)">
-      <data key="d0">0.779</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Volibear (FR/RU)">
-      <data key="d0">0.5771</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Lissandra Volibear (FR/SI)">
-      <data key="d0">0.6545</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.6637</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.7137</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.7577</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.667</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Ashe LeBlanc (FR/NX)">
-      <data key="d0">0.5963</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Annie Jhin (NX/RU)">
-      <data key="d0">0.5961</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.5734</data>
-    </edge>
-    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.7423</data>
-    </edge>
-    <edge source="Mordekaiser Morgana (DE/SI)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.6811</data>
-    </edge>
-    <edge source="Mordekaiser Morgana (DE/SI)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.5604</data>
-    </edge>
-    <edge source="Mordekaiser Morgana (DE/SI)" target="Ashe LeBlanc (FR/NX)">
-      <data key="d0">0.622</data>
-    </edge>
-    <edge source="Mordekaiser Morgana (DE/SI)" target="Gwen Zed (IO/SI)">
-      <data key="d0">0.7629</data>
-    </edge>
-    <edge source="Mordekaiser Morgana (DE/SI)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.5685</data>
-    </edge>
-    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.6</data>
-    </edge>
-    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.6236</data>
-    </edge>
-    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Ashe LeBlanc (FR/NX)">
-      <data key="d0">0.6354</data>
-    </edge>
-    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Annie Jhin (NX/RU)">
-      <data key="d0">0.8052</data>
-    </edge>
-    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Volibear (FR/RU)">
-      <data key="d0">0.5726</data>
+    <node id="Aurelion Sol Elder Dragon (MT/RU)" />
+    <node id="Master Yi Nami (BW/IO)" />
+    <node id="Karma Sett (IO/PZ)" />
+    <node id="Elder Dragon Morgana Shyvana (DE/RU)" />
+    <node id="Janna Nilah (BW/PZ)" />
+    <node id="Karma Sett (FR/IO)" />
+    <node id="Maokai Nautilus (BW/SI)" />
+    <edge source="Annie Jhin (NX/RU)" target="Annie Jhin (NX/RU)">
+      <data key="d0">0.5</data>
     </edge>
     <edge source="Annie Jhin (NX/RU)" target="Gwen Zed (IO/SI)">
-      <data key="d0">0.6575</data>
+      <data key="d0">0.3848</data>
     </edge>
-    <edge source="Annie Jhin (NX/RU)" target="Teemo Yuumi (BC/PZ)">
-      <data key="d0">0.6261</data>
+    <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Mordekaiser Viego (RU/SI)">
+      <data key="d0">0.3656</data>
     </edge>
     <edge source="Annie Jhin (NX/RU)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.6558</data>
+      <data key="d0">0.4447</data>
     </edge>
-    <edge source="Annie Jhin (NX/RU)" target="Lissandra Volibear (FR/SI)">
-      <data key="d0">0.7263</data>
-    </edge>
-    <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.6662</data>
+    <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Galio Morgana (DE/RU)">
+      <data key="d0">0.5</data>
     </edge>
     <edge source="Annie Jhin (NX/RU)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.6315</data>
+      <data key="d0">0.2555</data>
     </edge>
     <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Volibear (FR/RU)">
-      <data key="d0">0.6143</data>
+      <data key="d0">0.23</data>
     </edge>
-    <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.5631</data>
+    <edge source="Annie Jhin (NX/RU)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.3968</data>
+    </edge>
+    <edge source="Annie Jhin (NX/RU)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.359</data>
+    </edge>
+    <edge source="Annie Jhin (NX/RU)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.3854</data>
+    </edge>
+    <edge source="Annie Jhin (NX/RU)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5291</data>
+    </edge>
+    <edge source="Annie Jhin (NX/RU)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.6102</data>
+    </edge>
+    <edge source="Annie Jhin (NX/RU)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.6989</data>
     </edge>
     <edge source="Annie Jhin (NX/RU)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.5636</data>
+      <data key="d0">0.2577</data>
     </edge>
-    <edge source="Gwen Zed (IO/SI)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.7462</data>
+    <edge source="Annie Jhin (NX/RU)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4485</data>
+    </edge>
+    <edge source="Gwen Zed (IO/SI)" target="Gwen Zed (IO/SI)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Gwen Zed (IO/SI)" target="Elder Dragon Mordekaiser Viego (RU/SI)">
+      <data key="d0">0.3438</data>
     </edge>
     <edge source="Gwen Zed (IO/SI)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.6097</data>
+      <data key="d0">0.3325</data>
     </edge>
-    <edge source="Gwen Zed (IO/SI)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.5869</data>
-    </edge>
-    <edge source="Gwen Zed (IO/SI)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.6874</data>
+    <edge source="Gwen Zed (IO/SI)" target="Elder Dragon Galio Morgana (DE/RU)">
+      <data key="d0">0.4286</data>
     </edge>
     <edge source="Gwen Zed (IO/SI)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.5666</data>
-    </edge>
-    <edge source="Gwen Zed (IO/SI)" target="Teemo Yuumi (BC/PZ)">
-      <data key="d0">0.5676</data>
+      <data key="d0">0.3566</data>
     </edge>
     <edge source="Gwen Zed (IO/SI)" target="Elder Dragon Volibear (FR/RU)">
-      <data key="d0">0.5813</data>
+      <data key="d0">0.201</data>
     </edge>
-    <edge source="Teemo Yuumi (BC/PZ)" target="Elder Dragon Volibear (FR/RU)">
-      <data key="d0">0.6619</data>
+    <edge source="Gwen Zed (IO/SI)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.4724</data>
     </edge>
-    <edge source="Teemo Yuumi (BC/PZ)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.6398</data>
+    <edge source="Gwen Zed (IO/SI)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.3415</data>
     </edge>
-    <edge source="Teemo Yuumi (BC/PZ)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.6253</data>
+    <edge source="Gwen Zed (IO/SI)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.4178</data>
     </edge>
-    <edge source="Teemo Yuumi (BC/PZ)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.6083</data>
+    <edge source="Gwen Zed (IO/SI)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5185</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.6071</data>
+    <edge source="Gwen Zed (IO/SI)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.589</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.6874</data>
+    <edge source="Gwen Zed (IO/SI)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.5562</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.5669</data>
+    <edge source="Gwen Zed (IO/SI)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.2698</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Elder Dragon Norra (BC/RU)">
-      <data key="d0">0.6361</data>
+    <edge source="Gwen Zed (IO/SI)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4444</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.6046</data>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Mordekaiser Viego (RU/SI)">
+      <data key="d0">0.5</data>
     </edge>
-    <edge source="Elder Dragon Volibear (FR/RU)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.5654</data>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Pyke Rek'Sai (BW/SH)">
+      <data key="d0">0.5113</data>
     </edge>
-    <edge source="Elder Dragon Norra (BC/RU)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.6803</data>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Galio Morgana (DE/RU)">
+      <data key="d0">0.4087</data>
     </edge>
-    <edge source="Elder Dragon Norra (BC/RU)" target="Pyke Rek'Sai (BW/SH)">
-      <data key="d0">0.6168</data>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Caitlyn Teemo (FR/PZ)">
+      <data key="d0">0.6636</data>
     </edge>
-    <edge source="Elder Dragon Norra (BC/RU)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.5572</data>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Volibear (FR/RU)">
+      <data key="d0">0.5099</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.3902</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.4837</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.6961</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5446</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.4162</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.5143</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.68</data>
+    </edge>
+    <edge source="Elder Dragon Mordekaiser Viego (RU/SI)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4967</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Pyke Rek'Sai (BW/SH)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Elder Dragon Galio Morgana (DE/RU)">
+      <data key="d0">0.3837</data>
     </edge>
     <edge source="Pyke Rek'Sai (BW/SH)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.6139</data>
+      <data key="d0">0.4545</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Elder Dragon Volibear (FR/RU)">
+      <data key="d0">0.3034</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.5079</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.3818</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.3697</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.4444</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.4589</data>
+    </edge>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.512</data>
     </edge>
     <edge source="Pyke Rek'Sai (BW/SH)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.6164</data>
+      <data key="d0">0.4</data>
     </edge>
-    <edge source="Lissandra Volibear (FR/SI)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.6514</data>
+    <edge source="Pyke Rek'Sai (BW/SH)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4741</data>
     </edge>
-    <edge source="Lissandra Volibear (FR/SI)" target="Elder Dragon Shyvana (DE/RU)">
-      <data key="d0">0.6042</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Galio Morgana (DE/RU)">
+      <data key="d0">0.5</data>
     </edge>
-    <edge source="Lissandra Volibear (FR/SI)" target="Karma Sett (IO/PZ)">
-      <data key="d0">0.5899</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Caitlyn Teemo (FR/PZ)">
+      <data key="d0">0.3008</data>
     </edge>
-    <edge source="Lissandra Volibear (FR/SI)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.5558</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Volibear (FR/RU)">
+      <data key="d0">0.4632</data>
     </edge>
-    <edge source="Karma Sett (IO/PZ)" target="Karma Sett (FR/IO)">
-      <data key="d0">0.5803</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.5164</data>
     </edge>
-    <edge source="Karma Sett (IO/PZ)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.6997</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.4834</data>
     </edge>
-    <edge source="Karma Sett (FR/IO)" target="Caitlyn Teemo (FR/PZ)">
-      <data key="d0">0.7299</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.3577</data>
     </edge>
-    <edge source="Karma Sett (FR/IO)" target="Ashe LeBlanc (FR/NX)">
-      <data key="d0">0.6869</data>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.4151</data>
+    </edge>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.4537</data>
+    </edge>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.3402</data>
+    </edge>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.4421</data>
+    </edge>
+    <edge source="Elder Dragon Galio Morgana (DE/RU)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4598</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Caitlyn Teemo (FR/PZ)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Elder Dragon Volibear (FR/RU)">
+      <data key="d0">0.4536</data>
     </edge>
     <edge source="Caitlyn Teemo (FR/PZ)" target="Ashe LeBlanc (FR/NX)">
-      <data key="d0">0.5593</data>
+      <data key="d0">0.5784</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.4667</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.5944</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.2588</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.2073</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.2759</data>
+    </edge>
+    <edge source="Caitlyn Teemo (FR/PZ)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.3099</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Elder Dragon Volibear (FR/RU)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.6024</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.3254</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.5755</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.4111</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.3243</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.6</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.663</data>
+    </edge>
+    <edge source="Elder Dragon Volibear (FR/RU)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4744</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Ashe LeBlanc (FR/NX)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.3587</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.3913</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.4037</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.3936</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.5093</data>
+    </edge>
+    <edge source="Ashe LeBlanc (FR/NX)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.3684</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Aurelion Sol Elder Dragon (MT/RU)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.5865</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5536</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.5588</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.5422</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.8333</data>
+    </edge>
+    <edge source="Aurelion Sol Elder Dragon (MT/RU)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.5147</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Master Yi Nami (BW/IO)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5729</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.6465</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.7209</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.5116</data>
+    </edge>
+    <edge source="Master Yi Nami (BW/IO)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.3649</data>
+    </edge>
+    <edge source="Karma Sett (IO/PZ)" target="Karma Sett (IO/PZ)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Karma Sett (IO/PZ)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.6154</data>
+    </edge>
+    <edge source="Karma Sett (IO/PZ)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.4054</data>
+    </edge>
+    <edge source="Karma Sett (IO/PZ)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.4744</data>
+    </edge>
+    <edge source="Karma Sett (IO/PZ)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.6119</data>
+    </edge>
+    <edge source="Elder Dragon Morgana Shyvana (DE/RU)" target="Elder Dragon Morgana Shyvana (DE/RU)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Elder Dragon Morgana Shyvana (DE/RU)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.2258</data>
+    </edge>
+    <edge source="Elder Dragon Morgana Shyvana (DE/RU)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Elder Dragon Morgana Shyvana (DE/RU)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.4545</data>
+    </edge>
+    <edge source="Janna Nilah (BW/PZ)" target="Janna Nilah (BW/PZ)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Janna Nilah (BW/PZ)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.3143</data>
+    </edge>
+    <edge source="Janna Nilah (BW/PZ)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.5517</data>
+    </edge>
+    <edge source="Karma Sett (FR/IO)" target="Karma Sett (FR/IO)">
+      <data key="d0">0.5</data>
+    </edge>
+    <edge source="Karma Sett (FR/IO)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.6111</data>
+    </edge>
+    <edge source="Maokai Nautilus (BW/SI)" target="Maokai Nautilus (BW/SI)">
+      <data key="d0">0.5</data>
     </edge>
   </graph>
 </graphml>
