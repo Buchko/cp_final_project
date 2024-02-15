@@ -2,7 +2,7 @@
     import {onMount, setContext} from 'svelte'
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
-    import GraphStyles from './GraphStyles.js'
+    import {style} from './GraphStyles'
 
     export let nodes
     export let edges
@@ -19,7 +19,7 @@
 
         cyInstance = cytoscape({
             container: refElement,
-            style: GraphStyles,
+            style
         })
         cyInstance.add(nodes)
         cyInstance.add(edges)
