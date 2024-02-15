@@ -1,0 +1,9 @@
+:root {
+    --base: rgb(30, 30, 46);
+    --green: rgb(166, 227, 161);
+    --pink: #f5c2e7;
+}
+
+body {
+    background: var(--base);
+}
