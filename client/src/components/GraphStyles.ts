@@ -5,18 +5,23 @@ import {pipe} from "rambda"
 
 const green = new Color("hsl", [115, 54, 76])
 const teal = new Color("hsl", [189, 71, 73])
+const yellow = new Color("hsl", [41, 86, 83])
+const red = new Color("hsl", [343, 81, 75])
+
 const greenTealRange = green.range(teal)
+const yellowRedRange = yellow.range(red)
 
 const edgeColorMapper = (ele: any) => {
     //scaling winrate from 0.55 to .8
-    const MIN = 0.55
+    const MIN = 0.50
     const MAX = 0.8
 
-    const winRate = ele.data().win_rate
+    const { win_rate: winRate, losing } = ele.data()
     const clampedWinRate = clamp(winRate, MIN, MAX)
     const linearVal = scale(clampedWinRate, MIN, MAX)
+    const colorRange = losing ? yellowRedRange : greenTealRange
 
-    const ans =  greenTealRange(linearVal).to("hsl").toString(
+    const ans =   colorRange(linearVal).to("hsl").toString(
         {format: {
             name: "hsl",
                 commas: true,

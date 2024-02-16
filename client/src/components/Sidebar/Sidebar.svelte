@@ -31,7 +31,7 @@
     <div class="threshold">
       <h1>winrate threshold</h1>
       <div class="slider-wrapper">
-        <input  type="range" min="0.5" max="1" value={$winrateThreshold} class="range" step="0.05" on:input="{handleWinrateSliderChange}"/>
+        <input  type="range" min="0.5" max="1" value={$winrateThreshold} class="range range-primary" step="0.05" on:input="{handleWinrateSliderChange}"/>
         <div class="w-full flex justify-between text-xs px-2">
           <span>0.5</span>
           <span></span>
@@ -46,7 +46,7 @@
     <h1>I want to counter</h1>
     {#each archetypes as archetype}
       <div>
-        <input type="checkbox" checked={$selectedNodesList.includes(archetype.id)} class="checkbox" on:input={handleCheck} id="{archetype.id}"/>
+        <input type="checkbox" checked={$selectedNodesList.includes(archetype.id)} class="checkbox checkbox-primary" on:input={handleCheck} id="{archetype.id}"/>
         <span class="archetype">{archetype.label}</span>
       </div>
       {/each}
@@ -54,7 +54,7 @@
   </div>
   <div class="methodToggle">
     <h1>Show losing matchups?</h1>
-    <input type="checkbox" class="toggle" on:input={handleMethodToggle}/>
+    <input type="checkbox" class="toggle toggle-success" on:input={handleMethodToggle}/>
     </div>
 </div>
 

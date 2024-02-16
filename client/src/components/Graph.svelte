@@ -64,11 +64,17 @@
             let edgesToKeep
             if (showLosingMatchups){
                 const winningDecks = selectedNodes.nodes().incomers().sources()
-                //get edges that go from target nodes to selected nodes
-                edgesToKeep = selectedNodes.edgesWith(winningDecks)
+                //get edges between winning decks and target decks
+                //get edges that go from target decks to winning deck, aka losing match ups
+                const losingMatchUps = selectedNodes.edgesTo(winningDecks)
+                losingMatchUps.data("losing", true)
+                const winningMatchUps = winningDecks.edgesTo(selectedNodes)
+                winningMatchUps.data("losing", false)
                 console.log("edges to keep", {winningDecks, edgesToKeep})
+                edgesToKeep = losingMatchUps.union(winningMatchUps)
             } else {
                 edgesToKeep = selectedNodes.nodes().incomers().edges()
+                edgesToKeep.data("losing", false)
             }
             const edgesToRemove = cyInstance.edges().subtract(edgesToKeep)
             return cyInstance.remove(edgesToRemove)
@@ -100,10 +106,8 @@
         updateGraph(removedEdges, winrateThreshold, selectedNodes)
 
         cyInstance.on("tap", "node", (event) => {
-            if (!cyInstance || !selectedNodes || !removedEdges){
-                return
-            }
-            //remove edges not connected to this node and rerun the layout
+            //toggling whether clicked node is selected
+            if (!cyInstance || !selectedNodes || !removedEdges) return
             const clickedNode = event.target
             const id = clickedNode.id();
             if (selectedNodes?.contains(clickedNode)){
