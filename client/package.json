@@ -23,6 +23,7 @@
     "@types/cytoscape": "^3.19.16",
     "colorjs.io": "^0.4.5",
     "cytoscape": "^3.28.1",
+    "cytoscape-cola": "^2.5.1",
     "cytoscape-dagre": "^2.5.0",
     "rambda": "^9.1.0"
   }

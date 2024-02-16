@@ -3,7 +3,6 @@
 
   onMount(() => {
     const interval = setInterval(() => {
-      console.log('beep');
     }, 1000);
 
     return () => clearInterval(interval);

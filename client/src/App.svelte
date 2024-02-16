@@ -39,6 +39,8 @@
     let parsedNodes = parseGraphData("nodes", nodes)
     parsedNodes = addChampionImages(parsedNodes);
     let parsedEdges = parseGraphData("edges", edges)
+    //adding labels to edges from their winrate
+    edges = parsedEdges.map(edge => ({ ...edge, label: edge.data.win_rate }));
     parsedEdges = filterEdges(parsedEdges, 0.55)
 
 </script>
