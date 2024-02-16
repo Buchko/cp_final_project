@@ -1,5 +1,7 @@
 <script lang="ts">
+    import "./app.css"
     import Graph from './components/Graph.svelte'
+    import Sidebar from './components/Sidebar/Sidebar.svelte'
     import GraphNode from './components/GraphNode.svelte'
     import GraphEdge from './components/GraphEdge.svelte'
 
@@ -39,13 +41,27 @@
     let parsedNodes = parseGraphData("nodes", nodes)
     parsedNodes = addChampionImages(parsedNodes);
     let parsedEdges = parseGraphData("edges", edges)
+    parsedEdges = filterEdges(parsedEdges, 0.50)
+
     //adding labels to edges from their winrate
-    edges = parsedEdges.map(edge => ({ ...edge, label: edge.data.win_rate }));
-    parsedEdges = filterEdges(parsedEdges, 0.55)
-
+    const labledEdges = parsedEdges.map(edge => ({ ...edge, label: edge.data.win_rate }));
 </script>
-<Graph nodes={ parsedNodes } edges={parsedEdges}>
-</Graph>
 
-<style>
+    <div id="document">
+        <Sidebar archetypes={nodes}/>
+        <Graph nodes={ parsedNodes } edges={labledEdges}>
+        </Graph>
+    </div>
+
+<style lang="postcss">
+    div{
+        background-color: theme(colors.gray.100);
+        color: theme(colors.gray.100);
+    }
+
+    #document{
+        display: flex;
+        flex-direction: row;
+        background-color: theme(colors.base-100);
+    }
 </style>

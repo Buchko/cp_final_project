@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     --base: rgb(30, 30, 46);
     --green: rgb(166, 227, 161);

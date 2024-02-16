@@ -9,3 +9,7 @@ export const rescale =  (x, start: {min: number, max: number}, end: {min: number
     const distance = scale(x, start.min, start.max)
     return end.min + (end.max - end.min) * distance
 }
+
+export const remToPx = (rem: number): number  => {
+    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}

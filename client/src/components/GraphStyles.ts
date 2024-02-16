@@ -1,5 +1,6 @@
 import Color from "colorjs.io"
-import {clamp, scale, rescale} from "../utils/math"
+import {clamp, scale, rescale, remToPx} from "../utils/math"
+import {pipe} from "rambda"
 
 
 const green = new Color("hsl", [115, 54, 76])
@@ -32,18 +33,24 @@ const edgeColorMapper = (ele: any) => {
 
 const getNodeSize = (node: any) => {
     const games_played = node.data().games_played
-    return  rescale(games_played, {min: 500, max: 5000}, {min: 5, max: 50})
+    return pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 0.4, max: 4}), remToPx)(games_played)
 }
 
 const scaleArrowSizeByWinrate  = (edge: any) => {
     const winRate = edge.data().win_rate
-    const scale = rescale(winRate, {min: 0.55, max: 0.8}, {min: 0.1, max: 1})
+    const scale = rescale(winRate, {min: 0.50, max: 0.8}, {min: 0.1, max: 1})
+    if (scale <= 0){
+        console.log(edge.data(), scale)
+    }
     return scale
 }
 
-const handleNodeOutLine = (node: any): string => {
-    console.log("polar handling outline", node.data())
+const handleNodeOutlineColor = (node: any): string => {
     return node.data().selected ? "#f5c2e7" : "#cba6f7"
+}
+
+const handleNodeOutlineWidth = (node: any): number => {
+    return node.data().selected ? 2 :  1
 }
 export const style =  [
     {
@@ -58,9 +65,9 @@ export const style =  [
             'text-wrap': 'wrap',
             'text-max-width': '140',
             'background-color': 'gold',
-            'border-color': handleNodeOutLine,
+            'border-color': handleNodeOutlineColor,
             'background-fit': "cover",
-            'border-width': '1',
+            'border-width': handleNodeOutlineWidth,
             'color': 'darkred',
             "background-image": "data(imageUrl)"
         }
@@ -73,10 +80,8 @@ export const style =  [
             'text-background-padding': '3',
             'width': scaleArrowSizeByWinrate,
             'target-arrow-shape': 'triangle',
-            'line-color': ele => edgeColorMapper(ele),
-            'target-arrow-color': function ( ele ) {
-                return edgeColorMapper(ele);
-            },
+            'line-color': edgeColorMapper,
+            'target-arrow-color': edgeColorMapper,
             'arrow-scale': scaleArrowSizeByWinrate,
             'font-weight': 'bold'
         }
