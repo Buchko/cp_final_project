@@ -44,6 +44,7 @@
         }
     }
     const layoutFormat = {name: 'cola', flow: {axis: "x", minSeperator: 10}}
+    // const layoutFormat = {name: "dagre", rankDir: "TB", nodeSep: 25}
     const updateGraph = (removedEdges, winrateThreshold, selectedNodes, showLosingMatchups) => {
         if (!cyInstance){
             return
