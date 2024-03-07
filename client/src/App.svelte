@@ -2,32 +2,16 @@
     import "./app.css"
     import Graph from './components/Graph.svelte'
     import Sidebar from './components/Sidebar/Sidebar.svelte'
-    import GraphNode from './components/GraphNode.svelte'
-    import GraphEdge from './components/GraphEdge.svelte'
+    import {initialEdges, initialNodes} from "./stubbed/data.js"
+    import {addFirstChampionImage} from "./utils/lor";
 
-
-    import {initialEdges, initialNodes} from "./stubbed/data"
+    const mode = "standard"
 
     const parseGraphData = (type: string, data: any) => {
         //filtering edges that have the same source and target
         const filterer = type === "edges" ? (edge) => edge.source !== edge.target : _ => true
         //@ts-ignore node any type is okay
         return data.filter(filterer).map(node => ({group: type, id: node.id, data: {...node}}))
-    }
-
-    const addChampionImages = (nodes: any) => {
-
-        const getImageUrl = (championCode: string) => {
-            return new URL(`./assets/champion_portraits/${championCode}.webp`, import.meta.url).href
-        }
-        const getChampionCode = (node) => {
-            return node.data.assets.champions[0][1]
-        }
-
-        for (const node of nodes) {
-            node.data.imageUrl = getImageUrl(getChampionCode(node))
-        }
-        return nodes
     }
 
     const filterEdges = (edges, threshold: number) => {
@@ -39,7 +23,7 @@
     let edges = initialEdges
 
     let parsedNodes = parseGraphData("nodes", nodes)
-    parsedNodes = addChampionImages(parsedNodes);
+    parsedNodes = addFirstChampionImage(parsedNodes);
     let parsedEdges = parseGraphData("edges", edges)
     parsedEdges = filterEdges(parsedEdges, 0.50)
 

@@ -7,3 +7,5 @@ export const winrateThreshold = writable(0.50);
 const initialNodes: string[] = []
 export const selectedNodesList = writable(initialNodes)
 export const showLosingMatchups = writable(false)
+
+export const zoom = writable(1)

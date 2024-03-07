@@ -13,6 +13,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "@tsconfig/svelte": "^5.0.2",
     "@types/cytoscape-dagre": "^2.3.3",
+    "@types/cytoscape-popper": "^2.0.4",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.7.2",
     "postcss": "^8.4.35",
@@ -24,11 +25,13 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.7",
     "@types/cytoscape": "^3.19.16",
     "colorjs.io": "^0.4.5",
     "cytoscape": "^3.28.1",
     "cytoscape-cola": "^2.5.1",
     "cytoscape-dagre": "^2.5.0",
+    "dotenv": "^16.4.5",
     "rambda": "^9.1.0"
   }
 }
