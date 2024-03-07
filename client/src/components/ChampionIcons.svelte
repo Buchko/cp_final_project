@@ -15,7 +15,7 @@
     let size = initialSize * $zoom * 0.5
     zoom.subscribe((val) => {
         size = initialSize * val * 0.5
-        offset = size + remToPx(desiredPadding) * val * 0.1
+        offset = size + remToPx(desiredPadding) * val * 0.02
     })
 </script>
 

@@ -117,19 +117,9 @@
         removedEdges = newRemovedEdges
 
         // removing nodes that don't have any edges
-        // if (cyInstance.nodes(":inside").size() > 0) {
-        //     const nodes = cyInstance.nodes()
-        //     nodes.forEach((node) => {
-        //             console.log("polar node", {node}, node.degree())
-        //             if (node.neighborhood().size() == 0) {
-        //                 removedNodes = removedNodes.union(cyInstance.remove(node))
-        //             }
-        //         }
-        //     )
-        // } else {
-        //     removedNodes.restore()
-        //     removedNodes = cyInstance.collection()
-        // }
+        removedNodes.restore()
+        removedNodes = cyInstance.remove("[[degree = 0]]")
+
 
 
         console.log("removed after", removedNodes)
