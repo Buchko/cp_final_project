@@ -6,7 +6,7 @@
 
     export let node
 
-    const desiredPadding = 1
+    const desiredPadding = 0.01
     let offset = 0
 
     console.log("polar", node)
@@ -16,7 +16,7 @@
     let size = initialSize * $zoom * 0.5
     zoom.subscribe((val) => {
         size = initialSize * val * 0.5
-        offset = size + remToPx(desiredPadding) * val * 0.02
+        offset = size - 5 * val
     })
 </script>
 

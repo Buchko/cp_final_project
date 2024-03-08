@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onMount, setContext} from 'svelte'
-    import {winrateThreshold, selectedNodesList, showLosingMatchups} from "../utils/store"
+    import {winrateThreshold, selectedNodesList, showLosingMatchups, storeNodes, storeEdges, storeWinningNodes, storeSelectedNodes} from "../utils/store"
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
     import cola from 'cytoscape-cola'
@@ -73,8 +73,7 @@
             updateGraph(removedEdges, $winrateThreshold, selectedNodes, $showLosingMatchups)
         }
     }
-    const layoutFormat = {name: 'cola', flow: {axis: "x", minSeperator: 2}, nodeSpacing: node => 2}
-    // const layoutFormat = {name: "dagre", rankDir: "TB", nodeSep: 25}
+    const layoutFormat = {name: 'cola', flow: {axis: "x", minSeperator: 2}, padding: remToPx(8)}
     let flipFlop = false
     const updateGraph = (removedEdges, winrateThreshold, selectedNodes, showLosingMatchups) => {
         if (!cyInstance) {
@@ -124,8 +123,13 @@
 
 
         cyInstance.makeLayout(layoutFormat).run()
-
         nodePositions = getNodePositions(cyInstance.nodes(":inside"))
+
+        //updating store
+        storeNodes.set(cyInstance.nodes())
+        storeEdges.set(cyInstance.edges())
+        storeSelectedNodes.set(selectedNodes)
+        storeWinningNodes.set(selectedNodes.incomers().sources())
     }
 
     onMount(() => {

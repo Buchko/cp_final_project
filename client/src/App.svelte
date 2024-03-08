@@ -4,6 +4,8 @@
     import Sidebar from './components/Sidebar/Sidebar.svelte'
     import {initialEdges, initialNodes} from "./stubbed/data.js"
     import {addFirstChampionImage} from "./utils/lor";
+    import {totalGamesPlayed} from "./utils/store"
+    import RightBar from "./components/RightBar.svelte";
 
     const mode = "standard"
 
@@ -19,6 +21,16 @@
         return edges.filter(edge => edge.data.win_rate >= threshold)
     }
 
+    const getTotalGamesPlayed = (edges) => {
+        return edges.reduce((sum, edge) => {
+            const isSelfEdge = (edge.games_played === 1000 && edge.win_rate === 0.5)
+            if (isSelfEdge){
+                return sum
+            }
+            return sum + edge.games_played
+        }, 0)
+    }
+
     let nodes = initialNodes
     let edges = initialEdges
 
@@ -26,6 +38,7 @@
     parsedNodes = addFirstChampionImage(parsedNodes);
     let parsedEdges = parseGraphData("edges", edges)
     parsedEdges = filterEdges(parsedEdges, 0.50)
+    totalGamesPlayed.set(getTotalGamesPlayed(edges))
 
     //adding labels to edges from their winrate
     const labledEdges = parsedEdges.map(edge => ({ ...edge, label: edge.data.win_rate }));
@@ -33,8 +46,8 @@
 
     <div id="document">
         <Sidebar archetypes={nodes}/>
-        <Graph nodes={ parsedNodes } edges={labledEdges}>
-        </Graph>
+        <Graph nodes={ parsedNodes } edges={labledEdges}/>
+        <RightBar/>
     </div>
 
 <style lang="postcss">

@@ -13,3 +13,17 @@ export const rescale =  (x, start: {min: number, max: number}, end: {min: number
 export const remToPx = (rem: number): number  => {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 }
+
+const zip = (a: any[], b: any[]) => {
+    return a.map((ele, i) => [ele, b[i]])
+}
+
+export const weightedAverage =(weights: number[], items: number[]) => {
+    const zipped = zip(weights, items)
+    const numerator = zipped.map(ele => {
+        const [weight, item] = ele
+        return weight * item
+    }).reduce((sum, ele) => sum + ele, 0)
+    const denominator = weights.reduce((sum, curr) => sum + curr, 0)
+    return numerator / denominator
+}
