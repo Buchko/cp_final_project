@@ -40,14 +40,19 @@
                 y: position.position.y - position.height / 2,
             }]
         })
-        console.log("polar", ans)
         return ans
+    }
+
+    const resetNodes = () => {
+        removedNodes.restore()
+        removedNodes = cyInstance?.collection()
     }
 
 
     $: {
         if ($selectedNodesList && cyInstance) {
             //setting everything to unselected
+            resetNodes()
             let localSelectedNodes = cyInstance?.collection()
             const nodes = cyInstance.nodes()
             nodes.data("selected", false)
@@ -76,19 +81,19 @@
             return
         }
         //restoring nodes
-        console.log("polar removed nodes", removedNodes)
         removedNodes.restore()
         removedNodes = cyInstance.collection()
 
-        console.log("polar nodes", cyInstance.nodes())
 
         removedEdges.restore();
         removedEdges = cyInstance.collection()
+
 
         //remove edges based on their threshold
         let newRemovedEdges = ((winrateThreshold) => {
             return cyInstance.remove(`edge[win_rate<${winrateThreshold}]`)
         })($winrateThreshold)
+
 
         //remove edges based on selected nodes
         const nodeRemovedEdges = ((selectedNodes) => {
@@ -104,7 +109,6 @@
                 losingMatchUps.data("losing", true)
                 const winningMatchUps = winningDecks.edgesTo(selectedNodes)
                 winningMatchUps.data("losing", false)
-                console.log("edges to keep", {winningDecks, edgesToKeep})
                 edgesToKeep = losingMatchUps.union(winningMatchUps)
             } else {
                 edgesToKeep = selectedNodes.nodes().incomers().edges()
@@ -116,17 +120,12 @@
         newRemovedEdges = newRemovedEdges.union(nodeRemovedEdges)
         removedEdges = newRemovedEdges
 
-        // removing nodes that don't have any edges
-        removedNodes.restore()
-        removedNodes = cyInstance.remove("[[degree = 0]]")
+        removedNodes = cyInstance.remove(cyInstance.nodes("[[degree = 0]]"))
 
-
-
-        console.log("removed after", removedNodes)
 
         cyInstance.makeLayout(layoutFormat).run()
 
-        nodePositions = getNodePositions(cyInstance.nodes())
+        nodePositions = getNodePositions(cyInstance.nodes(":inside"))
     }
 
     onMount(() => {
@@ -172,6 +171,7 @@
         cyInstance.on("render", () => {
             nodePositions = getNodePositions(cyInstance?.nodes())
             nodeTopPositions = addOffsets({nodePositions})
+            console.log("polar", {nodePositions})
             zoom.set(cyInstance.zoom())
         })
     })
@@ -179,7 +179,7 @@
 </script>
 
 <div class="graph" bind:this={refElement} id="cy">
-    {#if nodeTopPositions}
+    {#if nodeTopPositions && nodeTopPositions.length > 0}
         {#each [...nodeTopPositions] as [nodeId, value]}
             <Floater x={value.x} y={value.y}>
                 <ChampionIcons node={cyInstance.$id(nodeId)}></ChampionIcons>
@@ -191,7 +191,15 @@
 <style lang="postcss">
     #cy {
         width: 100%;
-        height: 1200px;
+        height: 100vh;
         display: block;
+        text-align: center;
     }
+
+    #graph-text {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+
 </style>

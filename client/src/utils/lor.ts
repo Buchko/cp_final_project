@@ -4,8 +4,8 @@ const getImageUrl = (championCode: string) => {
 
 export const getRestOfChampionImages = (node) => {
     let champions = node.assets.champions
-    champions.shift()
-    const championCodes = champions.map(champion => champion[1])
+    const restOfChampions = champions.slice(1)
+    const championCodes = restOfChampions.map(champion => champion[1])
     return championCodes.map(code => getImageUrl(code))
 }
 
