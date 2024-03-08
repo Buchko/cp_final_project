@@ -3,7 +3,6 @@
   import {winrateThreshold, selectedNodesList, showLosingMatchups} from "../../utils/store"
 
   export let archetypes
-  console.log({archetypes})
 
   const handleWinrateSliderChange = (event) => {
     const value = parseFloat(event.target.value)
@@ -11,7 +10,6 @@
   }
 
   const handleCheck  = (event) => {
-    console.log(event.target)
     const {id} = event.target
     if (event.target.checked) {
       //adding to the list
@@ -60,10 +58,12 @@
 
 <style lang="postcss">
   div#sidebar{
-    width: 20rem;
+    width: 25rem;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow: scroll;
   }
 
   div.threshold{

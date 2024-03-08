@@ -38,15 +38,14 @@ const edgeColorMapper = (ele: any) => {
 
 export const getNodeSize = (node: any) => {
     const games_played = node.data().games_played
-    const ans =  pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 0.6, max: 4}), remToPx)(games_played)
+    const ans =  pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 2, max: 8}), remToPx)(games_played)
     return ans
 }
 
 const scaleArrowSizeByWinrate  = (edge: any) => {
     const winRate = edge.data().win_rate
-    const scale = rescale(winRate, {min: 0.50, max: 0.8}, {min: 0.1, max: 1})
+    const scale = rescale(winRate, {min: 0.50, max: 0.8}, {min: 0.2, max: 2})
     if (scale <= 0){
-        console.log(edge.data(), scale)
     }
     return scale
 }
