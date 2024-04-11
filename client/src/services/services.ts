@@ -1,41 +1,23 @@
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
+export const testFetch = async () => {
+    const url = "/api";
+    const response = await fetch(url);
+    const text = await response.text();
+    console.log("polar response", text);
+};
 
-import {createClient} from '@supabase/supabase-js'
+export const fetch_json = async (url) => {
+    const response = await fetch(url);
+    const json = await response.json();
+    return json;
+};
 
-// Create a single supabase client for interacting with your database
-const supabase = createClient(supabaseUrl, supabaseKey)
+export const fetchMetaData = async (mode: "standard" | "eternal") => {
+    const urls = [`/api/meta/${mode}/edges`, `/api/meta/${mode}/nodes`];
+    const promises = urls.map((url) => fetch_json(url));
+    const responses = await Promise.all(promises);
+    console.log("polar", { responses });
 
-async function convertBlobToObject(blob) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = function (event) {
-            try {
-                const jsonString = event.target.result;
-                const jsonObject = JSON.parse(jsonString);
-                resolve(jsonObject);
-            } catch (error) {
-                reject(error);
-            }
-        };
-
-        reader.onerror = function (error) {
-            reject(error);
-        };
-
-        reader.readAsText(blob);
-    });
-}
-
-export const fetchGraphData = async (mode: "eternal" | "standard") => {
-    const keys = [`${mode}-nodes.json`, `${mode}-edges.json`]
-    const fetchData = async (key: string, bucketName: string) => {
-        const {data, error} = await supabase.storage.from(bucketName).download(key)
-        const processedData = await convertBlobToObject(data)
-        return processedData
-    }
-    const promises = keys.map(key => fetchData(key, "lor-meta"))
-    let [nodes, edges] = await Promise.all(promises)
-    return [nodes, edges]
-}
+    const edges = responses[0];
+    const nodes = responses[1];
+    return { nodes, edges };
+};

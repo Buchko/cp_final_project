@@ -1,7 +1,9 @@
 ipykernel
-beatifulsoup4
+bs4
 requests
 function-pipes
 numpy
 networkx
 matplotlib
+supabase
+python-dotenv
