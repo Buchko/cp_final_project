@@ -132,9 +132,9 @@
 
         removedNodes = cyInstance.remove(cyInstance.nodes("[[degree = 0]]"))
 
-
+        //sometimes when adding nodes, they are set to hovered, so always removing that
+        cyInstance.nodes().removeClass("hovered")
         cyInstance.makeLayout(layoutFormat).run()
-        nodePositions = getNodePositions(cyInstance.nodes(":inside"))
 
         //updating store
         storeNodes.set(cyInstance.nodes())

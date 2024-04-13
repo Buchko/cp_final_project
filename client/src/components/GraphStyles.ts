@@ -53,11 +53,11 @@ const scaleArrowSizeByWinrate = (edge: any) => {
 }
 
 const handleNodeOutlineColor = (node: any): string => {
-    return node.data().selected ? "#f5c2e7" : "#cba6f7"
+    return node.data().selected ? "#f38ba8" : "#cba6f7"
 }
 
 const handleNodeOutlineWidth = (node: any): number => {
-    return node.data().selected ? 2 : 1
+    return node.data().selected ? 3 : 1.5
 }
 
 const getImgUrl = (node) => {
