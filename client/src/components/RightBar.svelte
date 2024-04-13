@@ -1,17 +1,24 @@
 <script lang="ts">
-    import {storeNodes, storeEdges, storeSelectedNodes, storeWinningNodes, totalGamesPlayed} from "../utils/store.js"
+    import {storeSelectedNodes, storeWinningNodes, totalGamesPlayed} from "../utils/store.js"
     import {weightedAverage} from "../utils/math.js"
     import {displayPercentage} from "../utils/utils"
 
+    export let nodes: any[]
+    export let edges: any[]
     let performances: [object, number][]
 
     const calculateTable = (nodes, edges, selectedNodes, winningNodes, gamesPlayed) => {
         if (!nodes || !edges || !selectedNodes ||!winningNodes || !gamesPlayed) return
+        // console.log("polar", {nodes, edges})
+        const selectedNodesIds = new Set(selectedNodes.map(node => node.id()))
+        console.log("polar winning nodes", winningNodes.map(node => node.data()))
         const getAverageMUWinrate =
             (winningNode) => {
-                const matchUps = winningNode.edgesTo(selectedNodes)
-                const weights = matchUps.map(edge => edge.data().games_played / $totalGamesPlayed)
-                const winRates = matchUps.map(edge => edge.data().win_rate)
+                // const matchUps = winningNode.edgesTo(selectedNodes)
+                const matchUps = edges.filter(edge => edge.data.source == winningNode.id() && selectedNodesIds.has(edge.data.target))
+                console.log("polar", {winningNode, matchUps})
+                const weights = matchUps.map(edge => edge.data.games_played / $totalGamesPlayed)
+                const winRates = matchUps.map(edge => edge.data.win_rate)
                 return weightedAverage(weights, winRates)
             }
         const averagePerformances = winningNodes.map(node => [node.data(), getAverageMUWinrate(node)])
@@ -19,10 +26,8 @@
         return new Map(sortedPerformances)
     }
     //subscriber functions
-    storeNodes.subscribe(_ => performances = calculateTable($storeNodes, $storeEdges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
-    storeEdges.subscribe(_ => performances = calculateTable($storeNodes, $storeEdges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
-    storeSelectedNodes.subscribe(_ => performances = calculateTable($storeNodes, $storeEdges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
-    storeWinningNodes.subscribe(_ => performances = calculateTable($storeNodes, $storeEdges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
+    storeSelectedNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
+    storeWinningNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storeSelectedNodes, $storeWinningNodes, $totalGamesPlayed))
 
 </script>
     <div id="wrapper">
@@ -34,7 +39,8 @@
             <thead>
             <tr>
                 <th>Deck</th>
-                <th>Predicted Winrate</th>
+                <th>Targeted Winrate</th>
+                <th>Global Winrate</th>
             </tr>
             </thead>
             <tbody>
@@ -42,6 +48,7 @@
                 <tr>
                     <td>{deck.label}</td>
                     <td>{displayPercentage(performance)}</td>
+                    <td>{displayPercentage(deck.win_rate)}</td>
                 </tr>
             {/each}
             </tbody>

@@ -42,7 +42,8 @@
     // let edges = initialEdges;
 
     let nodes;
-    let labledEdges;
+    let filteredEdges;
+    let parsedEdges;
     let parsedNodes;
     let readyToRender = false;
 
@@ -56,16 +57,10 @@
         parsedNodes = addFirstChampionImage(parsedNodes);
 
 
-        let parsedEdges = parseGraphData("edges", edges);
-        parsedEdges = filterEdges(parsedEdges, 0.5);
-        console.log("polar", { parsedEdges })
+        parsedEdges  = parseGraphData("edges", edges);
+        filteredEdges = filterEdges(parsedEdges, 0.5);
         totalGamesPlayed.set(getTotalGamesPlayed(edges));
 
-        // adding labels to edges from their winrate
-        labledEdges = parsedEdges.map((edge) => ({
-            ...edge,
-            label: edge.data.win_rate,
-        }));
         readyToRender = true;
     });
 </script>
@@ -73,8 +68,8 @@
 <div id="document">
     {#if readyToRender}
         <Sidebar archetypes={nodes} />
-        <Graph nodes={parsedNodes} edges={labledEdges} />
-        <RightBar />
+        <Graph nodes={parsedNodes} edges={filteredEdges} />
+        <RightBar nodes={parsedNodes} edges={parsedEdges} />
     {/if}
 </div>
 
