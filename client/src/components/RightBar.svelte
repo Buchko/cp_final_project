@@ -16,7 +16,6 @@
             }
         const averagePerformances = winningNodes.map(node => [node.data(), getAverageMUWinrate(node)])
         const sortedPerformances = averagePerformances.sort((a, b) => b[1] - a[1])
-        console.log("polar", {sortedPerformances})
         return new Map(sortedPerformances)
     }
     //subscriber functions

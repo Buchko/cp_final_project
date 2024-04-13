@@ -17,7 +17,6 @@ const main = async (event: any, context: any) => {
 
 const fetchFromS3 =  async (bucket: string, key: string) => {
     const res = await s3.getObject({Bucket: bucket, Key: key,  }).promise()
-    console.log("polar", res)
     // @ts-ignore
     return Maybe.of(res.Body).map((b) => b.toString("utf-8")).map(JSON.parse).extract()
 }

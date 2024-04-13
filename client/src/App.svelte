@@ -48,19 +48,17 @@
 
     // testFetch();
     onMount(async () => {
-        console.log("polar about to fetch");
         const res = await fetchMetaData("standard");
-        console.log("polar", { res });
         nodes = res.nodes;
         const edges = res.edges;
 
         parsedNodes = parseGraphData("nodes", nodes);
         parsedNodes = addFirstChampionImage(parsedNodes);
-        console.log("polar", { parsedNodes })
 
 
         let parsedEdges = parseGraphData("edges", edges);
         parsedEdges = filterEdges(parsedEdges, 0.5);
+        console.log("polar", { parsedEdges })
         totalGamesPlayed.set(getTotalGamesPlayed(edges));
 
         // adding labels to edges from their winrate

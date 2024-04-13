@@ -1,6 +1,14 @@
 <script lang="ts">
     import {onMount, setContext} from 'svelte'
-    import {winrateThreshold, selectedNodesList, showLosingMatchups, storeNodes, storeEdges, storeWinningNodes, storeSelectedNodes} from "../utils/store"
+    import {
+        winrateThreshold,
+        selectedNodesList,
+        showLosingMatchups,
+        storeNodes,
+        storeEdges,
+        storeWinningNodes,
+        storeSelectedNodes
+    } from "../utils/store"
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
     import cola from 'cytoscape-cola'
@@ -73,8 +81,11 @@
             updateGraph(removedEdges, $winrateThreshold, selectedNodes, $showLosingMatchups)
         }
     }
-    const layoutFormat = {name: 'cola', flow: {axis: "x", minSeperator: 2}, padding: remToPx(8)}
-    let flipFlop = false
+    const layoutFormat = {
+        name: 'cola',
+        flow: {axis: "x", minSeperator: 2},
+        padding: remToPx(8),
+    }
     const updateGraph = (removedEdges, winrateThreshold, selectedNodes, showLosingMatchups) => {
         if (!cyInstance) {
             return
@@ -172,10 +183,22 @@
                 clickedNode.data("selected", true)
             }
         })
+
+        cyInstance.on("mouseover", "node", (event) => {
+            const node = event.target
+            const edges = node.connectedEdges()
+            edges.addClass("hovered")
+        })
+
+        cyInstance.on("mouseout", "node", (event) => {
+            const node = event.target
+            const edges = node.connectedEdges()
+            edges.removeClass("hovered")
+        })
+
         cyInstance.on("render", () => {
             nodePositions = getNodePositions(cyInstance?.nodes())
             nodeTopPositions = addOffsets({nodePositions})
-            console.log("polar", {nodePositions})
             zoom.set(cyInstance.zoom())
         })
     })

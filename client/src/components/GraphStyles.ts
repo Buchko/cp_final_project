@@ -14,16 +14,17 @@ const yellowRedRange = yellow.range(red)
 const edgeColorMapper = (ele: any) => {
     //scaling winrate from 0.55 to .8
     const MIN = 0.50
-    const MAX = 0.8
+    const MAX = 0.7
 
-    const { win_rate: winRate, losing } = ele.data()
+    const {win_rate: winRate, losing} = ele.data()
     const clampedWinRate = clamp(winRate, MIN, MAX)
     const linearVal = scale(clampedWinRate, MIN, MAX)
     const colorRange = losing ? yellowRedRange : greenTealRange
 
-    const ans =   colorRange(linearVal).to("hsl").toString(
-        {format: {
-            name: "hsl",
+    const ans = colorRange(linearVal).to("hsl").toString(
+        {
+            format: {
+                name: "hsl",
                 commas: true,
                 coords: [
                     "<number>[0, 360]",
@@ -31,21 +32,22 @@ const edgeColorMapper = (ele: any) => {
                     "<percentage>"
                 ]
 
-            }}
+            }
+        }
     )
     return ans
 }
 
 export const getNodeSize = (node: any) => {
     const games_played = node.data().games_played
-    const ans =  pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 2, max: 8}), remToPx)(games_played)
+    const ans = pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 2, max: 8}), remToPx)(games_played)
     return ans
 }
 
-const scaleArrowSizeByWinrate  = (edge: any) => {
+const scaleArrowSizeByWinrate = (edge: any) => {
     const winRate = edge.data().win_rate
     const scale = rescale(winRate, {min: 0.50, max: 0.8}, {min: 0.2, max: 2})
-    if (scale <= 0){
+    if (scale <= 0) {
     }
     return scale
 }
@@ -55,14 +57,19 @@ const handleNodeOutlineColor = (node: any): string => {
 }
 
 const handleNodeOutlineWidth = (node: any): number => {
-    return node.data().selected ? 2 :  1
+    return node.data().selected ? 2 : 1
 }
 
 const getImgUrl = (node) => {
     const {id} = node.data()
-    return  `https://wtm-assets-dev.s3.us-west-2.amazonaws.com/champion-icons/${id}.webp`
+    return `https://wtm-assets-dev.s3.us-west-2.amazonaws.com/champion-icons/${id}.webp`
 }
-export const style =  [
+
+const parsePercentage = (node: any) => {
+    const {win_rate: winRate} = node.data()
+    return (winRate * 100).toFixed(1) + "%"
+}
+export const style = [
     {
         selector: 'node',
         style: {
@@ -87,14 +94,23 @@ export const style =  [
         selector: 'edge',
         style: {
             'curve-style': 'bezier',
-            'text-background-opacity': '1',
+            'text-background-opacity': '0.4',
             'text-background-padding': '3',
             'width': scaleArrowSizeByWinrate,
             'target-arrow-shape': 'triangle',
             'line-color': edgeColorMapper,
             'target-arrow-color': edgeColorMapper,
             'arrow-scale': scaleArrowSizeByWinrate,
-            'font-weight': 'bold'
+            'text-background-color': 'black',
+            'text-background-shape': 'round-rectangle',
+            "color": edgeColorMapper,
+            "font-size": "10",
+        }
+    },
+    {
+        selector: 'edge.hovered',
+        style: {
+            "label": parsePercentage
         }
     },
     {
