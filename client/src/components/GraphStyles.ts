@@ -57,6 +57,11 @@ const handleNodeOutlineColor = (node: any): string => {
 const handleNodeOutlineWidth = (node: any): number => {
     return node.data().selected ? 2 :  1
 }
+
+const getImgUrl = (node) => {
+    const {id} = node.data()
+    return  `https://wtm-assets-dev.s3.us-west-2.amazonaws.com/champion-icons/${id}.webp`
+}
 export const style =  [
     {
         selector: 'node',
@@ -75,6 +80,7 @@ export const style =  [
             'border-width': handleNodeOutlineWidth,
             'color': 'darkred',
             "background-image": "data(imageUrl)"
+            // "background-image": getImgUrl
         }
     },
     {

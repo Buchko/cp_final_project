@@ -1,5 +1,5 @@
 const getImageUrl = (championCode: string) => {
-    return new URL(`../assets/champion_portraits/${championCode}.webp`, import.meta.url).href
+    return `https://wtm-assets-dev.s3.us-west-2.amazonaws.com/champion-icons/${championCode}.webp`
 }
 
 export const getRestOfChampionImages = (node) => {
@@ -13,6 +13,7 @@ export const addFirstChampionImage = (nodes: any) => {
     const getChampionCode = (node) => {
         return node.data.assets.champions[0][1]
     }
+
 
     for (const node of nodes) {
         node.data.imageUrl = getImageUrl(getChampionCode(node))

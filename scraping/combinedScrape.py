@@ -5,20 +5,22 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from dotenv import load_dotenv
+import boto3
 
+s3 = boto3.client("s3")
 
 
 
 def scrape_nodes_and_portraits(mode):
     standard_url = "https://masteringruneterra.com/wp-content/plugins/deck-viewer/resource/meta-data.json"
-    eternal_url = "https://masteringruneterra.com/wp-content/plugins/deck-viewer/resource/eternal-meta-stats.json"
+    eternal_url = "https://masteringruneterra.com/wp-content/plugins/deck-viewer/resource/eternal-meta-data.json"
     url = eternal_url if mode == "eternal" else standard_url
     response = requests.get(url)
     print("response", response)
     input_data = response.json()
     # with open("data/eternal-meta-data.json", "r") as f:
     #     input_data = json.load(f)
-    input_data = input_data["stats"]["seven"]["americas"]
+    input_data = input_data["stats"]["three"]["americas"]
 
     top_15 = input_data[:15]
     output = []
@@ -38,16 +40,23 @@ def scrape_nodes_and_portraits(mode):
 
     parsed_data = [parse_data(i, data) for i, data in enumerate(top_15)]
 
-    with open("data/nodes.json", "w") as f:
-        json.dump(parsed_data, f)
+    json_data = json.dumps(parsed_data)
+    s3.put_object(Bucket="lor-meta", Key=f"{mode}/nodes.json", Body=json_data)
 
     def get_already_seen():
-        path = "data/images/champion_portraits"
-        only_files = [f for f in listdir(path) if isfile(join(path, f))]
-        champion_codes = [f.split(".")[0] for f in only_files]
-        return champion_codes
+        paginator = s3.get_paginator('list_objects_v2')
+        already_seen = set()
+        for page in paginator.paginate(Bucket="wtm-assets-dev", Prefix="champion-icons"):
+            for obj in page['Contents']:
+                already_seen.add(obj["Key"])
+        return already_seen
 
-    already_seen = set(get_already_seen())
+        # path = "data/images/champion_portraits"
+        # only_files = [f for f in listdir(path) if isfile(join(path, f))]
+        # champion_codes = [f.split(".")[0] for f in only_files]
+        # return champion_codes
+
+    already_seen = get_already_seen()
 
     def download_portrait(champion):
         champion_code = champion[1]
@@ -55,8 +64,7 @@ def scrape_nodes_and_portraits(mode):
             return
         url = f"https://masteringruneterra.com/wp-content/plugins/deck-viewer/assets/images/champions/{champion_code}.webp"
         res = requests.get(url)
-        with open(f"data/images/champion_portraits/{champion_code}.webp", "wb") as f:
-            f.write(res.content)
+        s3.put_object(Bucket="wtm-assets-dev", Key=f"champion-icons/{champion_code}.webp", Body=res.content)
         already_seen.add(champion_code)
 
     for data in parsed_data:
@@ -146,9 +154,6 @@ def scrape_edges(mode):
 
     archeTypes = [parseDeckCell(cell) for cell in deckCells]
     import json
-    # output = [{"id": f"n{i}", "label": deck.name} for i, deck in enumerate(archeTypes)]
-    # with open("data/nodes.json", "w") as f:
-    #     json.dump(output, f, indent=4)
 
     nameToId = {deck.name: f"n{i}" for i, deck in enumerate(archeTypes)}
     i = 0
@@ -160,9 +165,9 @@ def scrape_edges(mode):
             edgeList.append(thisEdge)
             i += 1
 
-    with open("data/edges.json", "w") as f:
-        json.dump(edgeList, f)
+    edge_json = json.dumps(edgeList)
+    s3.put_object(Bucket="lor-meta", Key=f"{mode}/edges.json", Body=edge_json)
 
 if __name__ == "__main__":
-    scrape_nodes_and_portraits("standard")
-    scrape_edges("standard")
+    scrape_nodes_and_portraits("eternal")
+    scrape_edges("eternal")

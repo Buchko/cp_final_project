@@ -5,5 +5,5 @@ function-pipes
 numpy
 networkx
 matplotlib
-supabase
 python-dotenv
+boto3

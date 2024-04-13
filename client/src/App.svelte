@@ -2,11 +2,10 @@
     import "./app.css";
     import Graph from "./components/Graph.svelte";
     import Sidebar from "./components/Sidebar/Sidebar.svelte";
-    import { initialEdges, initialNodes } from "./stubbed/data.js";
     import { addFirstChampionImage } from "./utils/lor";
     import { totalGamesPlayed } from "./utils/store";
     import RightBar from "./components/RightBar.svelte";
-    import { testFetch, fetchMetaData } from "./services/services";
+    import { fetchMetaData } from "./services/services";
     import { onMount } from "svelte";
 
     const mode = "standard";
@@ -57,6 +56,8 @@
 
         parsedNodes = parseGraphData("nodes", nodes);
         parsedNodes = addFirstChampionImage(parsedNodes);
+        console.log("polar", { parsedNodes })
+
 
         let parsedEdges = parseGraphData("edges", edges);
         parsedEdges = filterEdges(parsedEdges, 0.5);

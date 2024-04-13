@@ -12,12 +12,6 @@ export const fetch_json = async (url) => {
 };
 
 export const fetchMetaData = async (mode: "standard" | "eternal") => {
-    const urls = [`/api/meta/${mode}/edges`, `/api/meta/${mode}/nodes`];
-    const promises = urls.map((url) => fetch_json(url));
-    const responses = await Promise.all(promises);
-    console.log("polar", { responses });
-
-    const edges = responses[0];
-    const nodes = responses[1];
-    return { nodes, edges };
-};
+    const url = `api/meta?mode=${mode}`;
+    return await fetch_json(url);
+}
