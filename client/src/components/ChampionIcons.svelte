@@ -9,9 +9,7 @@
     const desiredPadding = 0.01
     let offset = 0
 
-    console.log("polar", node)
     const championImages = getRestOfChampionImages(node.data())
-    console.log("polar foo", node.data(), championImages)
     const initialSize = getNodeSize(node)
     let size = initialSize * $zoom * 0.5
     zoom.subscribe((val) => {

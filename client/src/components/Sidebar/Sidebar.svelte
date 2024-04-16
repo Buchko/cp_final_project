@@ -1,6 +1,6 @@
 <script lang="ts">
   import {writable} from "svelte/store";
-  import {winrateThreshold, selectedNodesList, showLosingMatchups} from "../../utils/store"
+  import {winrateThreshold, targetedNodesList, showLosingMatchups, considerTargets} from "../../utils/store"
 
   export let archetypes
 
@@ -13,14 +13,18 @@
     const {id} = event.target
     if (event.target.checked) {
       //adding to the list
-      selectedNodesList.update(nodes => [...nodes, id])
+      targetedNodesList.update(nodes => [...nodes, id])
     } else {
       //removing it
-      selectedNodesList.update(nodes => nodes.filter(node => node != id))
+      targetedNodesList.update(nodes => nodes.filter(node => node != id))
     }
   }
   const handleMethodToggle = (event) => {
     showLosingMatchups.set(event.target.checked)
+  }
+
+  const handleConsiderTargets = (event) => {
+    considerTargets.set(event.target.checked)
   }
 
 </script>
@@ -30,7 +34,7 @@
     <h1 class="text-4xl">I want to counter</h1>
     {#each archetypes as archetype}
       <div>
-        <input type="checkbox" checked={$selectedNodesList.includes(archetype.id)} class="checkbox checkbox-primary" on:input={handleCheck} id="{archetype.id}"/>
+        <input type="checkbox" checked={$targetedNodesList.includes(archetype.id)} class="checkbox checkbox-primary" on:input={handleCheck} id="{archetype.id}"/>
         <span class="archetype">{archetype.label}</span>
       </div>
     {/each}
@@ -53,6 +57,10 @@
     <h1 class="text-2xl">Show losing matchups?</h1>
     <input type="checkbox" class="toggle toggle-success" on:input={handleMethodToggle}/>
     </div>
+  <div class="methodToggle">
+    <h1 class="text-2xl">Consider Targets?</h1>
+    <input type="checkbox" class="toggle toggle-success" on:input={handleConsiderTargets}/>
+  </div>
 </div>
 
 <style lang="postcss">

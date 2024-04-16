@@ -49,7 +49,7 @@
 
     // testFetch();
     onMount(async () => {
-        const res = await fetchMetaData("standard");
+        const res = await fetchMetaData("eternal");
         nodes = res.nodes;
         const edges = res.edges;
 

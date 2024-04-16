@@ -11,7 +11,11 @@ export const getRestOfChampionImages = (node) => {
 
 export const addFirstChampionImage = (nodes: any) => {
     const getChampionCode = (node) => {
-        return node.data.assets.champions[0][1]
+        try {
+            return node.data.assets.champions[0][1]
+        } catch (e) {
+            return null
+        }
     }
 
 

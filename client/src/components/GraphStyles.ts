@@ -40,7 +40,7 @@ const edgeColorMapper = (ele: any) => {
 
 export const getNodeSize = (node: any) => {
     const games_played = node.data().games_played
-    const ans = pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 2, max: 8}), remToPx)(games_played)
+    const ans = pipe((x) => rescale(x, {min: 500, max: 5000}, {min: 2.5, max: 8}), remToPx)(games_played)
     return ans
 }
 

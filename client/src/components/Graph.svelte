@@ -2,12 +2,13 @@
     import {onMount, setContext} from 'svelte'
     import {
         winrateThreshold,
-        selectedNodesList,
+        targetedNodesList,
         showLosingMatchups,
         storeNodes,
         storeEdges,
         storeWinningNodes,
-        storeSelectedNodes
+        storetargetedNodes,
+        considerTargets,
     } from "../utils/store"
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
@@ -17,6 +18,7 @@
     import {remToPx} from "../utils/math"
     import ChampionIcons from "./ChampionIcons.svelte"
     import {zoom} from "../utils/store"
+    import fcose from 'cytoscape-fcose';
 
     export let nodes
     export let edges
@@ -24,9 +26,10 @@
     let refElement: HTMLElement | null = null
     let cyInstance: cytoscape.Core | null = null
 
-    let selectedNodes: cytoscape.Collection | null = null;
+    let targetedNodes: cytoscape.Collection | null = null;
     let removedEdges: cytoscape.Collection | null = null;
     let removedNodes: cytoscape.Collection | null = null;
+    let selectedNode: cytoscape.NodeSingular | null = null;
 
     let nodePositions
     let nodeTopPositions
@@ -58,35 +61,44 @@
 
 
     $: {
-        if ($selectedNodesList && cyInstance) {
+        if ($targetedNodesList && cyInstance) {
             //setting everything to unselected
             resetNodes()
-            let localSelectedNodes = cyInstance?.collection()
+            let localtargetedNodes = cyInstance?.collection()
             const nodes = cyInstance.nodes()
             nodes.data("selected", false)
 
             //selecting the stuff that got selected
-            for (const id of $selectedNodesList) {
+            for (const id of $targetedNodesList) {
                 const ele = cyInstance.getElementById(id)
-                localSelectedNodes = localSelectedNodes?.union(ele)
+                localtargetedNodes = localtargetedNodes?.union(ele)
                 ele.data("selected", true)
             }
 
-            selectedNodes = localSelectedNodes
+            targetedNodes = localtargetedNodes
         }
     }
 
     $: {
-        if (selectedNodes || $winrateThreshold || $showLosingMatchups) {
-            updateGraph(removedEdges, $winrateThreshold, selectedNodes, $showLosingMatchups)
+        if (targetedNodes || $winrateThreshold || $showLosingMatchups) {
+            updateGraph(removedEdges, $winrateThreshold, targetedNodes, $showLosingMatchups, $considerTargets, selectedNode)
         }
     }
-    const layoutFormat = {
+    const calcEdgeLength = edge => 20
+    let layoutFormat = {
         name: 'cola',
-        flow: {axis: "x", minSeperator: 2},
         padding: remToPx(8),
+        // flow: {axis: "x", minSeparation: 0},
+        // edgeLength: calcEdgeLength
+        // infinite: true
     }
-    const updateGraph = (removedEdges, winrateThreshold, selectedNodes, showLosingMatchups) => {
+    // let layoutFormat = {
+    //     name: 'fcose',
+    //     padding: remToPx(8),
+    //     animationDuration: 250,
+    //     randomize: true,
+    // }
+    const updateGraph = (removedEdges, winrateThreshold, targetedNodes, showLosingMatchups: boolean, considerTargets: boolean, selectedNode) => {
         if (!cyInstance) {
             return
         }
@@ -104,48 +116,62 @@
             return cyInstance.remove(`edge[win_rate<${winrateThreshold}]`)
         })($winrateThreshold)
 
-
         //remove edges based on selected nodes
-        const nodeRemovedEdges = ((selectedNodes) => {
-            if (selectedNodes.empty()) {
+        if (selectedNode){
+            console.log("polar", "removing by selected", {selectedNode})
+            const selectedEdges = selectedNode.connectedEdges()
+            const selectedEdgesToRemove = cyInstance.edges().difference(selectedEdges)
+            cyInstance.remove(selectedEdgesToRemove)
+            newRemovedEdges = newRemovedEdges.union(selectedEdgesToRemove)
+        }
+
+        //remove edges based on targeted nodes
+        const nodeRemovedEdges = ((targetedNodes) => {
+            if (targetedNodes.empty()) {
                 return cyInstance.remove(cyInstance.edges())
             }
             let edgesToKeep
             if (showLosingMatchups) {
-                const winningDecks = selectedNodes.nodes().incomers().sources()
-                //get edges between winning decks and target decks
-                //get edges that go from target decks to winning deck, aka losing match ups
-                const losingMatchUps = selectedNodes.edgesTo(winningDecks)
+                const winningDecks = targetedNodes.nodes().incomers().sources()
+                const losingMatchUps = targetedNodes.edgesTo(winningDecks)
                 losingMatchUps.data("losing", true)
-                const winningMatchUps = winningDecks.edgesTo(selectedNodes)
+
+                const winningMatchUps = winningDecks.edgesTo(targetedNodes)
                 winningMatchUps.data("losing", false)
                 edgesToKeep = losingMatchUps.union(winningMatchUps)
             } else {
-                edgesToKeep = selectedNodes.nodes().incomers().edges()
+                edgesToKeep = targetedNodes.nodes().incomers().edges()
                 edgesToKeep.data("losing", false)
+            }
+
+            if (!considerTargets) {
+                const internalEdges = targetedNodes.edgesTo(targetedNodes)
+                edgesToKeep = edgesToKeep.difference(internalEdges)
             }
             const edgesToRemove = cyInstance.edges().subtract(edgesToKeep)
             return cyInstance.remove(edgesToRemove)
-        })(selectedNodes)
+        })(targetedNodes)
+
         newRemovedEdges = newRemovedEdges.union(nodeRemovedEdges)
         removedEdges = newRemovedEdges
 
         removedNodes = cyInstance.remove(cyInstance.nodes("[[degree = 0]]"))
 
         //sometimes when adding nodes, they are set to hovered, so always removing that
-        cyInstance.nodes().removeClass("hovered")
+        // cyInstance.edges().removeClass("hovered")
         cyInstance.makeLayout(layoutFormat).run()
 
         //updating store
         storeNodes.set(cyInstance.nodes())
         storeEdges.set(cyInstance.edges())
-        storeSelectedNodes.set(selectedNodes)
-        storeWinningNodes.set(selectedNodes.incomers().sources())
+        storetargetedNodes.set(targetedNodes)
+        storeWinningNodes.set(targetedNodes.incomers().sources())
     }
 
     onMount(() => {
         cytoscape.use(dagre)
         cytoscape.use(cola)
+        cytoscape.use(fcose)
 
         cyInstance = cytoscape({
             container: refElement,
@@ -162,26 +188,31 @@
             .makeLayout(layoutFormat)
             .run()
 
-        selectedNodes = cyInstance.collection()
-        updateGraph(removedEdges, winrateThreshold, selectedNodes, true)
+        targetedNodes = cyInstance.collection()
+        updateGraph(removedEdges, winrateThreshold, targetedNodes, true)
 
         cyInstance.on("tap", "node", (event) => {
             //toggling whether clicked node is selected
-            if (!cyInstance || !selectedNodes || !removedEdges) return
-
-            const clickedNode = event.target
-            const id = clickedNode.id();
-            if (selectedNodes?.contains(clickedNode)) {
-                //unselecting that node and restoring removed edges
-                selectedNodes = selectedNodes?.subtract(clickedNode)
-                selectedNodesList.update(nodes => nodes.filter(node => node != id))
-                clickedNode.data("selected", false)
+            if (!cyInstance || !targetedNodes || !removedEdges) return
+            const newClickedNode = event.target
+            console.log("polar", {newClickedNode, selectedNode})
+            if (newClickedNode == selectedNode){
+                selectedNode = null
             } else {
-                //adding this node to the list of selected nodes
-                selectedNodes = selectedNodes.union(clickedNode)
-                selectedNodesList.update(nodes => [...nodes, id])
-                clickedNode.data("selected", true)
+                selectedNode = newClickedNode
             }
+            updateGraph(removedEdges, $winrateThreshold, targetedNodes, $showLosingMatchups, $considerTargets, selectedNode)
+            // if (targetedNodes?.contains(clickedNode)) {
+            //     //unselecting that node and restoring removed edges
+            //     targetedNodes = targetedNodes?.subtract(clickedNode)
+            //     targetedNodesList.update(nodes => nodes.filter(node => node != id))
+            //     clickedNode.data("selected", false)
+            // } else {
+            //     //adding this node to the list of selected nodes
+            //     targetedNodes = targetedNodes.union(clickedNode)
+            //     targetedNodesList.update(nodes => [])
+            //     clickedNode.data("selected", true)
+            // }
         })
 
         cyInstance.on("mouseover", "node", (event) => {
