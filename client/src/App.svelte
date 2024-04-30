@@ -4,7 +4,7 @@
     import Sidebar from "./components/Sidebar/Sidebar.svelte";
     import { addFirstChampionImage } from "./utils/lor";
     import { totalGamesPlayed } from "./utils/store";
-    import RightBar from "./components/RightBar.svelte";
+    import RightBar from "./components/RightBar/RightBar.svelte";
     import { fetchMetaData } from "./services/services";
     import { onMount } from "svelte";
 
@@ -49,7 +49,7 @@
 
     // testFetch();
     onMount(async () => {
-        const res = await fetchMetaData("eternal");
+        const res = await fetchMetaData("standard");
         nodes = res.nodes;
         const edges = res.edges;
 

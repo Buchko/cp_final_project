@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import json
 from dotenv import load_dotenv
 import boto3
+import argparse
 
 s3 = boto3.client("s3")
 
@@ -80,9 +81,9 @@ def scrape_edges(mode):
 
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    headers = soup.select("div.grid-item:not(.versus-cell)")
+    headers = soup.select("div.grid-item.side-header")
     headers = map(lambda x: x.text.strip(), headers)
-    decks = list(headers)[1:16]
+    decks = list(headers)
     print(len(decks))
     print(decks)
 
@@ -97,59 +98,48 @@ def scrape_edges(mode):
     rawText = map(lambda x: x.text.strip(), cells)
 
     def getWinRateAndGames(text):
-        winRate, games = text.split("\n");
+        print(text)
+        winRate = text.strip()
         # handing winrate
         winRate = handleWinrate(winRate)
 
-        # handling games
-        games = games.split(" ")[1]
-        games = int(games)
-        return {"winRate": winRate, "gamesPlayed": games}
+        return {"winRate": winRate}
 
     matchUps = list(map(getWinRateAndGames, rawText))
     matchUps[0:10]
 
     table = {key: {} for key in decks}
-    muIndex = 0
-    for rawIndex in range(len(decks) * len(decks)):
-        i = rawIndex // 15
-        j = rawIndex % 15
-        deck1 = decks[i]
-        deck2 = decks[j]
-        if i == j:  # diagonal on the match up, the deck is playing itself
-            table[deck1][deck2] = {"win_rate": 0.5, "games_played": 10000}
-            continue
-        mu = matchUps[muIndex]
-        muIndex += 1
-        table[deck1][deck2] = {"win_rate": mu["winRate"], "games_played": mu["gamesPlayed"]}
+    NUM_ROWS = 15
+    # getting number of columns
+    column_headers = soup.select(".grid-container top-grid")
+    NUM_COLUMNS = len(column_headers)
+    NUM_COLUMNS_TO_GET = 15
+    for i in range(NUM_ROWS):
+        for j in range(NUM_COLUMNS_TO_GET):
+            deck1 = decks[i]
+            deck2 = decks[j]
+            if i == j:  # diagonal on the match up, the deck is playing itself
+                table[deck1][deck2] = {"win_rate": 0.5, "games_played": 10000}
+                continue
+            mu_index = i * NUM_COLUMNS + j
+            mu = matchUps[mu_index]
+            table[deck1][deck2] = {"win_rate": mu["winRate"]}
     print(table)
 
-    deckCells = soup.select(".grid-container:not(:first-child):not(:last-child) > .grid-item.side-header:first-child")
+    deckCells = soup.select(".grid-container:not(:first-child):not(:last-child) > .grid-item.side-header")
     len(deckCells)
     from dataclasses import dataclass, asdict
 
     @dataclass
     class Archetype:
         name: str
-        games_played: int
-        win_rate: float
-        play_rate: float
 
     def parseDeckCell(deckCell):
         children = list(deckCell.childGenerator())
         children = [child.text for child in children]
         name = children[0]
 
-        games_played = children[1].split(" ")[1]
-        games_played = int(games_played)
-
-        win_rate = children[2].split(" ")[1]
-        win_rate = handleWinrate(win_rate)
-
-        play_rate = children[4].split(" ")[1]
-        play_rate = handleWinrate(play_rate)
-
-        ans = Archetype(name, games_played, win_rate, play_rate)
+        ans = Archetype(name)
         return ans
 
     archeTypes = [parseDeckCell(cell) for cell in deckCells]
@@ -161,7 +151,7 @@ def scrape_edges(mode):
     for playingDeck, opposingDecks in table.items():
         for opposingDeck, data in opposingDecks.items():
             thisEdge = {"id": f"e{i}", "source": nameToId[playingDeck], "target": nameToId[opposingDeck],
-                        "win_rate": data["win_rate"], "games_played": data["games_played"]}
+                        "win_rate": data["win_rate"]}
             edgeList.append(thisEdge)
             i += 1
 
@@ -169,5 +159,10 @@ def scrape_edges(mode):
     s3.put_object(Bucket="lor-meta", Key=f"{mode}/edges.json", Body=edge_json)
 
 if __name__ == "__main__":
-    scrape_nodes_and_portraits("eternal")
-    scrape_edges("eternal")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", choices=["standard", "eternal"])
+    args = parser.parse_args()
+    mode = args.mode
+
+    # scrape_nodes_and_portraits(mode)
+    scrape_edges(mode)
