@@ -97,6 +97,7 @@ def scrape_edges(mode):
     rawText = map(lambda x: x.text.strip(), cells)
 
     def getWinRateAndGames(text):
+        print(text)
         winRate, games = text.split("\n");
         # handing winrate
         winRate = handleWinrate(winRate)
@@ -169,5 +170,5 @@ def scrape_edges(mode):
     s3.put_object(Bucket="lor-meta", Key=f"{mode}/edges.json", Body=edge_json)
 
 if __name__ == "__main__":
-    scrape_nodes_and_portraits("eternal")
-    scrape_edges("eternal")
+    scrape_nodes_and_portraits("standard")
+    scrape_edges("standard")

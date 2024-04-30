@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {storetargetedNodes, storeWinningNodes, totalGamesPlayed} from "../utils/store.js"
+    import {storetargetedNodes, storeWinningNodes} from "../utils/store.js"
     import {weightedAverage} from "../utils/math.js"
     import {displayPercentage} from "../utils/utils"
 
@@ -7,14 +7,19 @@
     export let edges: any[]
     let performances: [object, number][]
 
-    const calculateTable = (nodes, edges, targetedNodes, winningNodes, gamesPlayed) => {
-        if (!nodes || !edges || !targetedNodes ||!winningNodes || !gamesPlayed) return
+    const calculateTable = (nodes, edges, targetedNodes, winningNodes) => {
+        if (!nodes || !edges || !targetedNodes ||!winningNodes) return
+        console.log({nodes, edges})
         const targetedNodesIds = new Set(targetedNodes.map(node => node.id()))
         const getAverageMUWinrate =
             (winningNode) => {
                 // const matchUps = winningNode.edgesTo(targetedNodes)
                 const matchUps = edges.filter(edge => edge.data.source == winningNode.id() && targetedNodesIds.has(edge.data.target))
-                const weights = matchUps.map(edge => edge.data.games_played / $totalGamesPlayed)
+                const weights = matchUps.map(edge => {
+                    const target = edge.data.target
+                    const targetNode = nodes.filter(node => node.data.id === target)[0]
+                    return targetNode.play_rate
+                })
                 const winRates = matchUps.map(edge => edge.data.win_rate)
                 return weightedAverage(weights, winRates)
             }
@@ -23,8 +28,8 @@
         return new Map(sortedPerformances)
     }
     //subscriber functions
-    storetargetedNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $totalGamesPlayed))
-    storeWinningNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $totalGamesPlayed))
+    storetargetedNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes))
+    storeWinningNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes))
 
 </script>
     <div id="wrapper">
