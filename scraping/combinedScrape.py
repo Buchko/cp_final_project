@@ -84,8 +84,6 @@ def scrape_edges(mode):
     headers = soup.select("div.grid-item.side-header")
     headers = map(lambda x: x.text.strip(), headers)
     decks = list(headers)
-    print(len(decks))
-    print(decks)
 
     def handleWinrate(winRate: str) -> str:
         winRate = winRate[:-1]  # dropping %
@@ -97,15 +95,14 @@ def scrape_edges(mode):
     cells = soup.select(".versus-cell > div")
     rawText = map(lambda x: x.text.strip(), cells)
 
-    def getWinRateAndGames(text):
-        print(text)
+    def get_win_rate(text):
         winRate = text.strip()
         # handing winrate
         winRate = handleWinrate(winRate)
 
         return {"winRate": winRate}
 
-    matchUps = list(map(getWinRateAndGames, rawText))
+    matchUps = list(map(get_win_rate, rawText))
     matchUps[0:10]
 
     table = {key: {} for key in decks}
@@ -114,17 +111,19 @@ def scrape_edges(mode):
     column_headers = soup.select(".grid-container top-grid")
     NUM_COLUMNS = len(column_headers)
     NUM_COLUMNS_TO_GET = 15
+    rows = list(soup.select_one("div.mu-table-container").children)
+
     for i in range(NUM_ROWS):
+        row = list(rows[i].children)
         for j in range(NUM_COLUMNS_TO_GET):
             deck1 = decks[i]
             deck2 = decks[j]
             if i == j:  # diagonal on the match up, the deck is playing itself
                 table[deck1][deck2] = {"win_rate": 0.5, "games_played": 10000}
                 continue
-            mu_index = i * NUM_COLUMNS + j
-            mu = matchUps[mu_index]
+            cell = row[j]
+            mu = get_win_rate(cell.text)
             table[deck1][deck2] = {"win_rate": mu["winRate"]}
-    print(table)
 
     deckCells = soup.select(".grid-container:not(:first-child):not(:last-child) > .grid-item.side-header")
     len(deckCells)
@@ -164,5 +163,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     mode = args.mode
 
-    # scrape_nodes_and_portraits(mode)
+    scrape_nodes_and_portraits(mode)
     scrape_edges(mode)

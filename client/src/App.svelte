@@ -3,7 +3,7 @@
     import Graph from "./components/Graph.svelte";
     import Sidebar from "./components/Sidebar/Sidebar.svelte";
     import { addFirstChampionImage } from "./utils/lor";
-    import RightBar from "./components/RightBar.svelte";
+    import RightBar from "./components/RightBar/RightBar.svelte";
     import { fetchMetaData } from "./services/services";
     import { onMount } from "svelte";
 

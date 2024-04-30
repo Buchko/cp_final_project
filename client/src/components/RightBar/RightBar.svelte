@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {storetargetedNodes, storeWinningNodes} from "../utils/store.js"
-    import {weightedAverage} from "../utils/math.js"
-    import {displayPercentage} from "../utils/utils"
+    import {storetargetedNodes, storeWinningNodes} from "../../utils/store.js"
+    import {weightedAverage} from "../../utils/math.js"
+    import {displayPercentage} from "../../utils/utils"
 
     export let nodes: any[]
     export let edges: any[]
