@@ -45,6 +45,7 @@
 
         parsedEdges  = parseGraphData("edges", edges);
         filteredEdges = filterEdges(parsedEdges, 0.5);
+        console.log({filteredEdges})
         readyToRender = true;
     });
 </script>
