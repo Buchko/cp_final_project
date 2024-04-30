@@ -49,6 +49,7 @@
         readyToRender = true;
     });
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 <div id="document">
     {#if readyToRender}
