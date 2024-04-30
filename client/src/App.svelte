@@ -3,12 +3,9 @@
     import Graph from "./components/Graph.svelte";
     import Sidebar from "./components/Sidebar/Sidebar.svelte";
     import { addFirstChampionImage } from "./utils/lor";
-    import { totalGamesPlayed } from "./utils/store";
-    import RightBar from "./components/RightBar/RightBar.svelte";
+    import RightBar from "./components/RightBar.svelte";
     import { fetchMetaData } from "./services/services";
     import { onMount } from "svelte";
-
-    const mode = "standard";
 
     const parseGraphData = (type: string, data: any) => {
         //filtering edges that have the same source and target
@@ -25,17 +22,6 @@
     const filterEdges = (edges, threshold: number) => {
         //filters out edges with a winrate below given amount
         return edges.filter((edge) => edge.data.win_rate >= threshold);
-    };
-
-    const getTotalGamesPlayed = (edges) => {
-        return edges.reduce((sum, edge) => {
-            const isSelfEdge =
-                edge.games_played === 1000 && edge.win_rate === 0.5;
-            if (isSelfEdge) {
-                return sum;
-            }
-            return sum + edge.games_played;
-        }, 0);
     };
 
     // let nodes = initialNodes;
@@ -59,8 +45,6 @@
 
         parsedEdges  = parseGraphData("edges", edges);
         filteredEdges = filterEdges(parsedEdges, 0.5);
-        totalGamesPlayed.set(getTotalGamesPlayed(edges));
-
         readyToRender = true;
     });
 </script>
