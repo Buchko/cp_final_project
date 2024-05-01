@@ -15,3 +15,7 @@ export const storeNodes = writable(undefined)
 export const storeEdges = writable(undefined)
 export const storetargetedNodes = writable(undefined)
 export const storeWinningNodes = writable(undefined)
+//value will be a node
+export const rightBarMouseIn = writable(undefined)
+//value will be a node
+export const rightBatMouseOUt = writable(undefined)

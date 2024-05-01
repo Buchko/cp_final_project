@@ -70,7 +70,7 @@
     </h2>
     {#if performances && performances.size > 0}
         {#each [...performances] as [deck, {weightedWinRate: performance, numWinningMatchups}]}
-            <div class="collapse bg-base-200">
+            <div class="collapse collapse-arrow bg-base-200">
                 <input type="radio" name="my-accordion-1">
                 <div class="collapse-title text-xl font-medium deck">
                     <RightChampionIcons deck={deck}/>
@@ -138,7 +138,7 @@
 <style>
     #wrapper {
         width: 40rem;
-        padding: 1rem
+        padding: 1rem;
     }
 
     #alt-text-wrapper {
@@ -161,6 +161,6 @@
     }
 
     .deck-name{
-        flex-grow: 2;
+        flex-shrink: 2;
     }
 </style>

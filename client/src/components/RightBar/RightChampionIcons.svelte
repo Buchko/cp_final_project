@@ -22,7 +22,6 @@
         gap: 0.5rem;
         justify-content: center;
         flex-wrap: wrap;
-        /*width: 33%*/
     }
 
     .champion-icon {
