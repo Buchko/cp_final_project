@@ -1,14 +1,11 @@
 <script lang="ts">
+    import {buildStyleString} from "../../utils/utils";
+
     export let x = 0
     export let y = 0
 
     let width = 10
     let height = 10
-
-    const buildStyleString = (styleObject: Object) => {
-        return Object.entries(styleObject).map(([key, value]) => `${key}:${value}`)
-            .join(';');
-    }
 
     const computeStyle = ({width, height, x, y}) => {
         const ans = ({

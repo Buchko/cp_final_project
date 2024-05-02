@@ -1,13 +1,21 @@
 <script lang="ts">
     import {getChampionImageUrl} from "../../utils/lor"
+
     export let deck
 
-    // const imageUrls = deck
-    console.log({deck})
-    const champImageUrls = deck.assets.champions.map(champion => {
-        const championCode = champion[1]
-        return getChampionImageUrl(championCode)
-    })
+    let champImageUrls
+    $: {
+        if (deck) {
+            champImageUrls = deck.assets.champions.map(champion => {
+                const championCode = champion[1]
+                return getChampionImageUrl(championCode)
+            })
+        }
+    }
+    // const champImageUrls = deck.assets.champions.map(champion => {
+    //     const championCode = champion[1]
+    //     return getChampionImageUrl(championCode)
+    // })
 </script>
 
 <div class="champion-icons">
@@ -22,6 +30,7 @@
         gap: 0.5rem;
         justify-content: center;
         flex-wrap: wrap;
+        width: 12rem;
     }
 
     .champion-icon {

@@ -18,4 +18,4 @@ export const storeWinningNodes = writable(undefined)
 //value will be a node
 export const rightBarMouseIn = writable(undefined)
 //value will be a node
-export const rightBatMouseOUt = writable(undefined)
+export const rightBarMouseOut = writable(undefined)

@@ -80,12 +80,11 @@ export const style = [
             'text-valign': 'center',
             'text-wrap': 'wrap',
             'text-max-width': '140',
-            'background-color': 'gold',
             'border-color': handleNodeOutlineColor,
             'background-fit': "cover",
             'border-width': handleNodeOutlineWidth,
-            'color': 'darkred',
-            "background-image": "data(imageUrl)"
+            'background-opacity': 1,
+            "background-color": "#1d232a"
             // "background-image": getImgUrl
         }
     },
@@ -124,6 +123,12 @@ export const style = [
             'line-color': 'orange',
             'target-arrow-color': 'orange'
         }
-    }
+    },
+    {
+        selector: 'node.hovered',
+        style: {
+            'border-width': node => 2 * handleNodeOutlineWidth(node),
+        }
+    },
 ]
 

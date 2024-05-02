@@ -9,16 +9,19 @@
         storeWinningNodes,
         storetargetedNodes,
         considerTargets,
-    } from "../utils/store"
+        rightBarMouseIn,
+        rightBarMouseOut
+    } from "../../utils/store"
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
     import cola from 'cytoscape-cola'
-    import {style} from './GraphStyles'
-    import Floater from "./Floater.svelte";
-    import {remToPx} from "../utils/math"
-    import ChampionIcons from "./ChampionIcons.svelte"
-    import {zoom} from "../utils/store"
+    import {style} from '../GraphStyles'
+    import Floater from "../abstract/Floater.svelte";
+    import {remToPx} from "../../utils/math"
+    import ChampionIcons from "../ChampionIcons.svelte"
+    import {zoom} from "../../utils/store"
     import fcose from 'cytoscape-fcose';
+    import FloatingChampionIcons from "./FloatingChampionIcons/FloatingChampionIcons.svelte"
 
     export let nodes
     export let edges
@@ -35,7 +38,7 @@
     let nodeTopPositions
 
     const getNodePositions = (nodes) => {
-        const data = nodes.map(node => [node.id(), {
+        const data = nodes.map(node => [node, {
             position: node.renderedPosition(),
             width: node.renderedWidth(),
             height: node.renderedHeight()
@@ -117,8 +120,7 @@
         })($winrateThreshold)
 
         //remove edges based on selected nodes
-        if (selectedNode){
-            console.log("polar", "removing by selected", {selectedNode})
+        if (selectedNode) {
             const selectedEdges = selectedNode.connectedEdges()
             const selectedEdgesToRemove = cyInstance.edges().difference(selectedEdges)
             cyInstance.remove(selectedEdgesToRemove)
@@ -168,6 +170,19 @@
         storeWinningNodes.set(targetedNodes.incomers().sources())
     }
 
+    const handleMouseIn = (node) => {
+        const edges = node.connectedEdges()
+        edges.addClass("hovered")
+        node.addClass("hovered")
+    }
+
+    const handleMouseOut = (node) => {
+        const edges = node.connectedEdges()
+        edges.removeClass("hovered")
+        node.removeClass("hovered")
+    }
+
+
     onMount(() => {
         cytoscape.use(dagre)
         cytoscape.use(cola)
@@ -195,8 +210,7 @@
             //toggling whether clicked node is selected
             if (!cyInstance || !targetedNodes || !removedEdges) return
             const newClickedNode = event.target
-            console.log("polar", {newClickedNode, selectedNode})
-            if (newClickedNode == selectedNode){
+            if (newClickedNode == selectedNode) {
                 selectedNode = null
             } else {
                 selectedNode = newClickedNode
@@ -217,34 +231,55 @@
 
         cyInstance.on("mouseover", "node", (event) => {
             const node = event.target
-            const edges = node.connectedEdges()
-            edges.addClass("hovered")
+            handleMouseIn(node)
         })
 
         cyInstance.on("mouseout", "node", (event) => {
             const node = event.target
-            const edges = node.connectedEdges()
-            edges.removeClass("hovered")
+            handleMouseOut(node)
         })
-
         cyInstance.on("render", () => {
             nodePositions = getNodePositions(cyInstance?.nodes())
-            nodeTopPositions = addOffsets({nodePositions})
             zoom.set(cyInstance.zoom())
         })
     })
 
+    let shouldDisplay
+    $: shouldDisplay = nodePositions && nodePositions.length > 0
+
+    rightBarMouseIn.subscribe(node => {
+        if (!cyInstance) return
+        console.log({node})
+        const ele = cyInstance.getElementById(node.id)
+        handleMouseIn(ele)
+    })
+
+    rightBarMouseOut.subscribe(node => {
+        if (!cyInstance) return
+        const ele = cyInstance.getElementById(node.id)
+        handleMouseOut(ele)
+    })
 </script>
 
 <div class="graph" bind:this={refElement} id="cy">
-    {#if nodeTopPositions && nodeTopPositions.length > 0}
-        {#each [...nodeTopPositions] as [nodeId, value]}
-            <Floater x={value.x} y={value.y}>
-                <ChampionIcons node={cyInstance.$id(nodeId)}></ChampionIcons>
+    {#if shouldDisplay}
+        {#each [...nodePositions] as [node, value]}
+            <Floater x={value.position.x} y={value.position.y}>
+                <FloatingChampionIcons {node}/>
             </Floater>
         {/each}
     {/if}
 </div>
+
+{#if !shouldDisplay}
+    <div id="feedback-text" class="text-5xl text-error">
+        {#if targetedNodes && targetedNodes.length === 0}
+            Select Decks to Target
+        {:else}
+            No Decks Found
+        {/if}
+    </div>
+{/if}
 
 <style lang="postcss">
     #cy {
@@ -254,10 +289,17 @@
         text-align: center;
     }
 
-    #graph-text {
+    #feedback-text {
+        position: absolute;
         display: flex;
-        align-content: center;
+        /*top: 0;*/
+        left: 30rem;
+        height: 100vh;
+        width: calc(100% - 30rem - 40rem);
+        text-align: center;
+        margin: auto;
         justify-content: center;
+        align-items: center;
     }
 
 </style>

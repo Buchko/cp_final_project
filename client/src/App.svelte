@@ -1,7 +1,7 @@
 <script lang="ts">
     import "./app.css";
-    import Graph from "./components/Graph.svelte";
-    import Sidebar from "./components/Sidebar/Sidebar.svelte";
+    import Graph from "./components/Graph/Graph.svelte";
+    import Sidebar from "./components/LeftBar/Leftbar.svelte";
     import { addFirstChampionImage } from "./utils/lor";
     import RightBar from "./components/RightBar/RightBar.svelte";
     import { fetchMetaData } from "./services/services";
@@ -45,7 +45,6 @@
 
         parsedEdges  = parseGraphData("edges", edges);
         filteredEdges = filterEdges(parsedEdges, 0.5);
-        console.log({filteredEdges})
         readyToRender = true;
     });
 </script>
