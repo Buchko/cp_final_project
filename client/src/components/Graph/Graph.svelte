@@ -90,7 +90,7 @@
     const calcEdgeLength = edge => 20
     let layoutFormat = {
         name: 'cola',
-        padding: remToPx(8),
+        // padding: remToPx(8),
         // flow: {axis: "x", minSeparation: 0},
         // edgeLength: calcEdgeLength
         // infinite: true

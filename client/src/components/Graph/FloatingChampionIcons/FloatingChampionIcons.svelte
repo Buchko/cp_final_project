@@ -17,8 +17,13 @@
         }
     }
 
-    const initialSize = getNodeSize(node)
-    let size = initialSize * $zoom
+    let initialSize = getNodeSize(node)
+    $: {
+        if (node){
+            initialSize = getNodeSize(node)
+        }
+    }
+    let size = 1
     const buildWrapperStyle = (size) => {
         return {
             width: size + "px",
