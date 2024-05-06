@@ -274,7 +274,7 @@
 {#if !shouldDisplay}
     <div id="feedback-text" class="text-5xl text-error">
         {#if targetedNodes && targetedNodes.length === 0}
-            Select Decks to Target
+            Select Decks to Counter
         {:else}
             No Decks Found
         {/if}

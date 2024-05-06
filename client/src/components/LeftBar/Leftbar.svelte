@@ -31,7 +31,9 @@
 
 <div id="sidebar">
   <div class="counters">
-    <h1 class="text-4xl">I want to counter</h1>
+    <header>
+      <h1 class="text-4xl">I want to counter...</h1>
+    </header>
     {#each archetypes as archetype}
       <div>
         <input type="checkbox" checked={$targetedNodesList.includes(archetype.id)} class="checkbox checkbox-primary" on:input={handleCheck} id="{archetype.id}"/>
@@ -70,8 +72,9 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    overflow: scroll;
     padding: 1rem;
+    background-color: var(--surface0);
+    border-radius: 1rem;
   }
 
   div.threshold{
@@ -80,7 +83,8 @@
     flex-direction: column;
   }
 
-  span.archetype{
+  header{
+    padding: 1rem;
   }
 
 </style>

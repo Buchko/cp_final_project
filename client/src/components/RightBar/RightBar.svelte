@@ -76,9 +76,11 @@
     winrateThreshold.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $winrateThreshold))
 </script>
 <div id="wrapper">
-    <h2 class="text-2xl">
-        Recommended Decks
-    </h2>
+    <div id="header">
+        <h2 class="text-4xl">
+            Recommended Decks
+        </h2>
+    </div>
     {#if performances && performances.size > 0}
         {#each [...performances] as [deck, {weightedWinRate: performance, numWinningMatchups}]}
             <div class="collapse collapse-arrow bg-base-200" on:mouseenter={(_) => handleMouseEnter(deck)} role="button"
@@ -121,6 +123,8 @@
     #wrapper {
         width: 40rem;
         padding: 1rem;
+        height: 100vh;
+        overflow-y: scroll;
     }
 
     #alt-text-wrapper {
@@ -145,4 +149,13 @@
     .deck-name {
         width: 66%
     }
+
+    #header{
+        border-radius: 1rem;
+        background-color: var(--surface0);
+        padding: 1rem;
+    }
+    /*.collapse{*/
+    /*    background-color: var(--surface0);*/
+    /*}*/
 </style>
