@@ -74,14 +74,28 @@
     storetargetedNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $winrateThreshold))
     storeWinningNodes.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $winrateThreshold))
     winrateThreshold.subscribe(_ => performances = calculateTable(nodes, edges, $storetargetedNodes, $storeWinningNodes, $winrateThreshold))
+
+    let showPerformances = false
+    $:{
+        if (performances){
+            showPerformances = performances && performances.size > 0
+        }
+    }
 </script>
 <div id="wrapper">
     <div id="header">
         <h2 class="text-4xl">
             Recommended Decks
         </h2>
+        {#if !showPerformances}
+            <div id="alt-text-wrapper">
+                <span>
+                Select decks to counter to see recommended decks
+                </span>
+            </div>
+        {/if}
     </div>
-    {#if performances && performances.size > 0}
+    {#if showPerformances}
         {#each [...performances] as [deck, {weightedWinRate: performance, numWinningMatchups}]}
             <div class="collapse collapse-arrow bg-base-200" on:mouseenter={(_) => handleMouseEnter(deck)} role="button"
                  tabindex="0" on:mouseleave={(_) => handleMouseLeave(deck)}>
@@ -103,19 +117,14 @@
                         <span class="material-symbols-outlined">
                             exit_to_app
                         </span>
-                        <a class="link link-primary text-2xl" href={deckNameToUrl(deck.label, "standard")} target="_blank">View
+                        <a class="link link-primary text-2xl" href={deckNameToUrl(deck.label, "standard")}
+                           target="_blank">View
                             deck list at
                             Mastering Runeterra</a>
                     </div>
                 </div>
             </div>
         {/each}
-    {:else}
-        <div id="alt-text-wrapper">
-                <span>
-                Select decks to counter to see recommended decks
-                </span>
-        </div>
     {/if}
 
 </div>
@@ -128,9 +137,7 @@
     }
 
     #alt-text-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        border-radius: 1rem;
     }
 
     .leave-link {
@@ -150,11 +157,16 @@
         width: 66%
     }
 
-    #header{
+    #header {
         border-radius: 1rem;
         background-color: var(--surface0);
         padding: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+        text-align: center;
     }
+
     /*.collapse{*/
     /*    background-color: var(--surface0);*/
     /*}*/
