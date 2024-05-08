@@ -259,6 +259,7 @@
         const ele = cyInstance.getElementById(node.id)
         handleMouseOut(ele)
     })
+
 </script>
 
 <div class="graph" bind:this={refElement} id="cy">
@@ -268,6 +269,9 @@
                 <FloatingChampionIcons {node}/>
             </Floater>
         {/each}
+        {#if selectedNode}
+            <button class="close-button btn btn-primary" on:click={() => selectedNode = null}>Unselect Deck</button>
+        {/if}
     {/if}
 </div>
 
@@ -280,6 +284,7 @@
         {/if}
     </div>
 {/if}
+
 
 <style lang="postcss">
     #cy {
@@ -300,6 +305,13 @@
         margin: auto;
         justify-content: center;
         align-items: center;
+    }
+
+    .close-button {
+        position: absolute;
+        right: 4rem;
+        top: 1rem;
+        font-size: 1.5rem;
     }
 
 </style>

@@ -70,6 +70,7 @@
         align-content: center;
         min-height: 0;
         min-width: 0;
+        cursor: pointer;
     }
 
     .champion-icon {
