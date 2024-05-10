@@ -273,6 +273,7 @@
             <button class="close-button btn btn-primary" on:click={() => selectedNode = null}>Unselect Deck</button>
         {/if}
     {/if}
+    <button class="meta-button btn btn-primary" >View Eternal Meta</button>
 </div>
 
 {#if !shouldDisplay}
@@ -310,6 +311,13 @@
     .close-button {
         position: absolute;
         right: 4rem;
+        top: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .meta-button {
+        position: absolute;
+        left: 4rem;
         top: 1rem;
         font-size: 1.5rem;
     }
