@@ -10,7 +10,8 @@
         storetargetedNodes,
         considerTargets,
         rightBarMouseIn,
-        rightBarMouseOut
+        rightBarMouseOut,
+        storeMode
     } from "../../utils/store"
     import cytoscape from 'cytoscape'
     import dagre from 'cytoscape-dagre'
@@ -21,6 +22,7 @@
     import ChampionIcons from "../ChampionIcons.svelte"
     import {zoom} from "../../utils/store"
     import fcose from 'cytoscape-fcose';
+    import {Link} from "svelte-routing"
     import FloatingChampionIcons from "./FloatingChampionIcons/FloatingChampionIcons.svelte"
 
     export let nodes
@@ -36,6 +38,9 @@
 
     let nodePositions
     let nodeTopPositions
+
+    let otherMode
+    $: otherMode = $storeMode === "standard" ? "eternal" : "standard"
 
     const getNodePositions = (nodes) => {
         const data = nodes.map(node => [node, {
@@ -273,7 +278,7 @@
             <button class="close-button btn btn-primary" on:click={() => selectedNode = null}>Unselect Deck</button>
         {/if}
     {/if}
-    <button class="meta-button btn btn-primary" >View Eternal Meta</button>
+    <button class="meta-button btn btn-primary" ><Link to={`/${otherMode}`}>View {otherMode} Meta</Link></button>
 </div>
 
 {#if !shouldDisplay}
@@ -320,6 +325,8 @@
         left: 4rem;
         top: 1rem;
         font-size: 1.5rem;
+        text-transform:  capitalize;
+        z-index: 100;
     }
 
 </style>
