@@ -39,7 +39,6 @@
 
     // testFetch();
     onMount(async () => {
-        console.log("polar", {mode})
         const res = await fetchMetaData(mode);
         nodes = res.nodes;
         const edges = res.edges;

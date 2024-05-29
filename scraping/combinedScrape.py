@@ -21,7 +21,10 @@ def scrape_nodes_and_portraits(mode):
     input_data = response.json()
     # with open("data/eternal-meta-data.json", "r") as f:
     #     input_data = json.load(f)
-    input_data = input_data["stats"]["three"]["americas"]
+    if mode == "standard":
+        input_data = input_data["stats"]["three"]["americas"]
+    else:
+        input_data = input_data["stats"]["patch"]["americas"]
 
     top_15 = input_data[:15]
     output = []
@@ -97,6 +100,8 @@ def scrape_edges(mode):
 
     def get_win_rate(text):
         winRate = text.strip()
+        if winRate == "---":
+            return -1
         # handing winrate
         winRate = handleWinrate(winRate)
 
@@ -123,6 +128,8 @@ def scrape_edges(mode):
                 continue
             cell = row[j]
             mu = get_win_rate(cell.text)
+            if mu == -1:
+                continue
             table[deck1][deck2] = {"win_rate": mu["winRate"]}
 
     deckCells = soup.select(".grid-container:not(:first-child):not(:last-child) > .grid-item.side-header")

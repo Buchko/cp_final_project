@@ -2,7 +2,6 @@
     import {Router, Route} from "svelte-routing";
     import LorEternal from "./LorEternal.svelte";
     import LorStandard from "./LorStandard.svelte";
-    console.log("polar from router")
 </script>
 
 <Router>

@@ -6,12 +6,18 @@ import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
 
+type lambdasProps = {
+    deploymentType: string;
+}
+
 
 export class Lambas extends Construct {
     public readonly lambdaLookup: Map<string, NodejsFunction>
 
-    constructor(scope: Construct, id: string) {
+    constructor(scope: Construct, id: string, props: lambdasProps) {
         super(scope, id);
+
+        const {deploymentType} = props
 
         const basicLambdaExecution = iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole")
         const s3Access = iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess')
@@ -21,12 +27,18 @@ export class Lambas extends Construct {
         });
 
         this.lambdaLookup = new Map()
-        const getMeta = new NodejsFunction(this, "getMeta", {
+        const name = "getMeta"
+        const lambdaId = `${deploymentType}-${name}`
+        const getMeta = new NodejsFunction(this, lambdaId, {
             entry: join(__dirname, "getMeta/getMeta.ts"),
             handler: "handler",
-            functionName: "getMeta",
+            functionName: lambdaId,
             runtime: Runtime.NODEJS_20_X,
-            role
+            role,
+            environment: {
+                s3Bucket: `${deploymentType}-lor-meta`,
+                deploymentType
+            },
         })
         this.lambdaLookup.set("getMeta", getMeta)
     }

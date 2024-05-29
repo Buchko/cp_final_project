@@ -1,0 +1,1 @@
+export type deploymentTypes = "development" | "staging" | "production"
