@@ -2,7 +2,7 @@ import {Context,} from 'aws-lambda';
 import {Maybe} from "purify-ts/Maybe"
 import {S3} from "aws-sdk"
 import "dotenv/config"
-const { DEPLOYMENT_TYPE: deploymentType = "", s3Bucket = "" } = process.env
+const { deploymentType  = "", s3Bucket = "" } = process.env
 
 import {wrapper} from "../middleWare"
 import {deprecate} from "node:util";
@@ -12,8 +12,10 @@ const s3 = new S3()
 const main = async (event: any, context: any) => {
     const {mode} = event
     //fetch from s3
-    const nodes = await fetchFromS3(`${deploymentType}-lor-meta`, `${mode}/nodes.json`)
-    const edges = await fetchFromS3(`${deploymentType}-lor-meta`, `${mode}/edges.json`)
+    const keyPrefix = `${deploymentType}/${mode}`
+    console.log({event, keyPrefix})
+    const nodes = await fetchFromS3(`lor-meta`, `${keyPrefix}/nodes.json`)
+    const edges = await fetchFromS3(`lor-meta`, `${keyPrefix}/edges.json`)
     return {nodes, edges}
 };
 

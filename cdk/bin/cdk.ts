@@ -5,8 +5,6 @@ import {Api} from "../lib/api/api";
 import "dotenv/config"
 
 const deploymentType = process.env["DEPLOYMENT_TYPE"]
-console.log({deploymentType})
-console.log(process.env)
 if (!deploymentType || !["development", "staging", "production"].includes(deploymentType)) {
     throw new Error("invalid deployment type")
 }

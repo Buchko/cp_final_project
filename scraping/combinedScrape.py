@@ -1,3 +1,4 @@
+import os
 from os import listdir, environ
 import requests
 from os.path import isfile, join
@@ -7,9 +8,10 @@ import json
 from dotenv import load_dotenv
 import boto3
 import argparse
+load_dotenv()
+deployment_type = os.environ["DEPLOYMENT_TYPE"]
 
 s3 = boto3.client("s3")
-
 
 
 def scrape_nodes_and_portraits(mode):
@@ -45,7 +47,7 @@ def scrape_nodes_and_portraits(mode):
     parsed_data = [parse_data(i, data) for i, data in enumerate(top_15)]
 
     json_data = json.dumps(parsed_data)
-    s3.put_object(Bucket="lor-meta", Key=f"{mode}/nodes.json", Body=json_data)
+    s3.put_object(Bucket="lor-meta", Key=f"{deployment_type}/{mode}/nodes.json", Body=json_data)
 
     def get_already_seen():
         paginator = s3.get_paginator('list_objects_v2')
@@ -162,7 +164,7 @@ def scrape_edges(mode):
             i += 1
 
     edge_json = json.dumps(edgeList)
-    s3.put_object(Bucket="lor-meta", Key=f"{mode}/edges.json", Body=edge_json)
+    s3.put_object(Bucket="lor-meta", Key=f"{deployment_type}/{mode}/edges.json", Body=edge_json)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

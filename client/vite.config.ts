@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [svelte()],
     server: {
         proxy: {
-            "/api": "https://tvnr8llrik.execute-api.us-west-2.amazonaws.com/prod",
+            "/api": "https://t2iyzpu6ll.execute-api.us-west-2.amazonaws.com/prod",
         },
     },
 });
