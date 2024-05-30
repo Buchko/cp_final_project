@@ -1,11 +1,14 @@
 import {Construct} from 'constructs'
 import {LambdaIntegration, RestApi, Resource} from 'aws-cdk-lib/aws-apigateway'
 import {NodejsFunction} from 'aws-cdk-lib/aws-lambda-nodejs';
+import {deploymentTypes} from "../../../constants/types"
+import {metricDataPointsList} from "aws-sdk/clients/frauddetector";
 
 type LambdaLookup = Map<string, NodejsFunction>
 
 interface Props {
     lambdaLookup: Map<string, NodejsFunction>
+    deploymentType: deploymentTypes
 }
 
 export class ApiGateway extends Construct {
@@ -19,10 +22,18 @@ export class ApiGateway extends Construct {
         })
 
         const root = api.root.addResource("api")
-        const meta = root.addResource("meta")
+        const stageRoot = getStageRoot(props.deploymentType, root)
+        const meta = stageRoot.addResource("meta")
         addLambdaIntegration(meta, "GET", lambdaLookup, "getMeta")
     }
 };
+
+const getStageRoot = (deploymentType: deploymentTypes, root: Resource) => {
+    if (deploymentType === "development" || deploymentType === "staging") {
+        return root.addResource(deploymentType)
+    }
+    return root
+}
 
 const addLambdaIntegration = (resource: Resource, method: string, lambdaLookup: LambdaLookup, lambdaName: string) => {
     const func = lambdaLookup.get(lambdaName)

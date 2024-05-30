@@ -68,7 +68,12 @@
         </div>
     </div>
     <div id="footer">
-        Deck performance and match-up data is obtained from <a class="link link-primary" href="https://masteringruneterra.com/">https://masteringruneterra.com/</a>
+        <div>Have any issues? Leave feedback on <a class="link link-primary"
+                                                   href="https://github.com/Buchko/cp_final_project">Github!</a></div>
+        <div>
+            Deck performance and match-up data is obtained from <a class="link link-primary"
+                                                                   href="https://masteringruneterra.com/">https://masteringruneterra.com/</a>
+        </div>
     </div>
 </div>
 
@@ -95,4 +100,11 @@
     header {
         padding: 1rem;
     }
+
+    div#footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
 </style>
