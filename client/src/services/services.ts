@@ -1,14 +1,9 @@
 const deploymentType = import.meta.env.VITE_DEPLOYMENT_TYPE
 const getApiUrlRoot = (deploymentType: string) => {
-    const deploymentTypeLookup = new Map([
-        ["development", "/api/dev/"],
-        ["production", "/api/"],
-    ])
-    const result = deploymentTypeLookup.get(deploymentType)
-    if (!result) {
-        throw new Error("invalid deployment type")
+    if (deploymentType === "development") {
+        return "/api"
     }
-    return result
+    return "https://api.whatsthemeta.net/api"
 }
 const urlRoot = getApiUrlRoot(deploymentType)
 export const fetch_json = async (url) => {
@@ -19,8 +14,7 @@ export const fetch_json = async (url) => {
 
 export const fetchMetaData = async (mode: "standard" | "eternal") => {
     const resource = "meta"
-    const domain = "https://t2iyzpu6ll.execute-api.us-west-2.amazonaws.com/prod"
-    const url = `${domain}/${urlRoot}${resource}?mode=${mode}`
+    const url = `${urlRoot}/${resource}?mode=${mode}`
     console.log("polar", { url })
     return await fetch_json(url);
 }
