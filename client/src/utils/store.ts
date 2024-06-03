@@ -1,4 +1,4 @@
-import {writable} from "svelte/store";
+import {readonly, writable} from "svelte/store";
 import cytoscape from "cytoscape";
 
 const cy = cytoscape()
@@ -21,3 +21,4 @@ export const rightBarMouseIn = writable(undefined)
 export const rightBarMouseOut = writable(undefined)
 
 export const storeMode = writable("standard")
+

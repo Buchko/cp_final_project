@@ -14,25 +14,21 @@ interface Props {
 export class ApiGateway extends Construct {
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id);
+        const {deploymentType} = props
 
         const {lambdaLookup} = props
+        const nameAndId = `${deploymentType}-api`
 
-        const api = new RestApi(this, "wtm", {
-            restApiName: "wtm",
+        const api = new RestApi(this, nameAndId, {
+            restApiName: nameAndId,
+            deployOptions: {
+                stageName: "main"
+            }
         })
-
         const root = api.root.addResource("api")
-        const stageRoot = getStageRoot(props.deploymentType, root)
-        const meta = stageRoot.addResource("meta")
+        const meta = root.addResource("meta")
         addLambdaIntegration(meta, "GET", lambdaLookup, "getMeta")
     }
-};
-
-const getStageRoot = (deploymentType: deploymentTypes, root: Resource) => {
-    if (deploymentType === "development" || deploymentType === "staging") {
-        return root.addResource(deploymentType)
-    }
-    return root
 }
 
 const addLambdaIntegration = (resource: Resource, method: string, lambdaLookup: LambdaLookup, lambdaName: string) => {
